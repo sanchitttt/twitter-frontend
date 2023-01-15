@@ -1,0 +1,14 @@
+import React from 'react'
+import './styles.css';
+
+
+function HomePostTextHelper({ disabled, url, children }) {
+  return (
+    <div id='homePostTextHelper' style={{ opacity: disabled && '0.3'}}>
+      <img src={url} width='16px' height='16px' alt='someImg' />
+      <div id='homePostTextHelperText'>{children}</div>
+    </div>
+  )
+}
+
+export default HomePostTextHelper

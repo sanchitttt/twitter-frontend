@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+#AppDesktop {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: 'Poppins';
+}
+
+
+@media screen and (max-width:1015px) {
+    /* #leftSideMasterContainer{
+        width: 10%;
+    }
+    #rightSideMasterContainer{
+        width: 90%;
+    } */
+}
+@media screen  and (max-width:1063px){
+    #leftSide{
+      margin-left: 450px;
+    }
+  }
+  
+  @media screen  and (max-width:933px){
+    #leftSide{
+      margin-left: 450px;
+    }
+  }
+  
+  @media screen  and (max-width:830px){
+    #leftSide{
+      margin-left: 350px;
+    }
+  }
+  
+  
+  @media screen  and (max-width:734px){
+    #leftSide{
+      margin-left: 750px;
+    }
+  }

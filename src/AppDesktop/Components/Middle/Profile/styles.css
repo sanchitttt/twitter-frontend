@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+#profile{
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    border-left:1px solid #EFF3F4;
+    border-right: 1px solid #EFF3F4;
+    font-family: 'Poppins';
+}
+
+#profile-top-heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    
+}
+
+#profile-top-heading-left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#profile-top-heading-left-imgContainer{
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    border-radius: 999px;
+    margin-right: 10px;
+}
+
+#profile-details-bio{
+    margin-left: 15px;
+    white-space: pre-wrap;
+    font-size: 15px;
+    margin-top:0;
+}
+
+#profile-top-heading-left-imgContainer:hover{
+    background-color: rgba(15, 20, 25, 0.1);
+}
+#profile-top-heading-left-imgContainer img{
+    width: 20px;
+    height: 20px;
+}
+#profile-top-heading-left-right{
+    display: flex;
+    flex-direction: column;
+    
+}
+#profile-top-heading-main{
+    font-size: 20px;
+    font-weight: bold;
+    color: #0F1419;
+    font-family: 'Poppins'; 
+}
+
+#profile-top-heading-subtext{
+    color: #536471;
+    font-size: 13px;
+    font-family: 'Poppins';
+}
+
+#profile-details-banner{
+    height:200px;
+    background-color: rgb(207, 217, 222);
+    margin-top: 5px;
+}
+
+#profile-details-firstRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-left: 15px;
+}
+
+#profile-details-firstRow-profilePicture{
+    width: 133px;
+    height: 133px;
+    border-radius: 999px;
+    box-shadow: rgba(0, 0, 0, 0.03) 0px 0px 2px inset;
+}
+
+#profile-details-firstRow-profilePicture img{
+    width: 133px;
+    height: 133px;
+    border-radius: 999px;
+}
+#profile-details-firstRow-editButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:111px;
+    border-radius: 9999px;
+    height: 34px;
+    border : 1px solid rgb(207, 217, 222);
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+#profile-details-secondRow{
+    font-size: 20px;
+    font-weight: bold;
+    color : #0F1419;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 15px;
+    margin-top: 15px;
+    font-family: 'Poppins';
+}
+
+#profile-details-thirdRow{
+    font-size: 15px;
+    color : #536471;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 15px;
+    font-family: 'Poppins';
+}
+
+#profile-details-fourthRow{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-left: 15px;
+    font-family: 'Poppins';
+}
+
+#profile-details-lastRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 15px;
+    align-items: center;
+    margin-top: 15px;
+    font-family: 'Poppins';
+}
+
+#profile-details-lastRow-left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#profile-details-lastRow-left-left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 10px;
+}
+
+#profile-details-lastRow-left-right{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.darkText{
+    font-size: 14px;
+    font-weight: bold;
+    color: #0f1419;
+    margin-right: 5px;
+    font-family: 'Poppins';
+}
+
+.lightText{
+    font-size: 14px;
+    color: #536471;
+    font-family: 'Poppins';
+}
+
+#profile-top{
+    /* background-color: antiquewhite; */
+    /* position: relative; */
+}
+#profile-details-container{
+    /* background: grey; */
+    margin-top: -71px;
+    /* position: absolute; */
+    /* pos */
+}
+
+.isALink{
+    color: #1D9BF0;
+    font-family: 'Poppins';
+}

@@ -1,0 +1,135 @@
+* {
+    font-family: sans-serif;
+  }
+  
+  .rightSide-whoToFollow-container {
+    width: 350px;
+    height: 225px;
+    border-radius: 15px;
+    background: rgb(247, 249, 249);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rightSide-whoToFollow-container-firstRow {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+  
+  .rightSide-whoToFollow-item-container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+
+
+  .primary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 36px;
+    border-radius: 9999px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    background: #1D9BF0;
+  }
+  
+  .primary-button-black {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 36px;
+    border-radius: 9999px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    background: #0f1419;
+  }
+  
+  .primary-button:hover {
+    background-color: rgba(29, 155, 240, 0.1);
+  }
+  
+  .primary-button-black:hover {
+    background-color: rgba(63, 67, 71);
+  }
+
+  .rightSide-whoToFollow-item-leftSide-rightSide {
+    margin-right: 15px;
+  }
+  
+  .rightSide-whoToFollow-item-container-secondRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .primary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 36px;
+    border-radius: 9999px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    background: #1D9BF0;
+  }
+  
+  .primary-button-black {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 36px;
+    border-radius: 9999px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    background: #0f1419;
+  }
+  
+  .primary-button:hover {
+    background-color: rgba(29, 155, 240, 0.1);
+  }
+  
+  .primary-button-black:hover {
+    background-color: rgba(63, 67, 71);
+  }
+  
+  .post-accountName {
+    font-size: 15px;
+    color: #0f1419;
+    font-weight: bold;
+    padding-right: 5px;
+  }
+  
+  .post-accountHandle {
+    font-size: 15px;
+    color: #536471;
+    padding-right: 5px;
+  }
+  
+
+  @media screen and (max-width:1015px) {
+    .rightSide-whoToFollow-container{
+      display: none;
+    }
+  }

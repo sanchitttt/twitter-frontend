@@ -1,0 +1,13 @@
+.post-icon{
+    transition: 0.2s;
+    padding:3px;
+    border-radius: 999px;
+}
+
+.post-icon:hover{
+    background-color: var(--buttonLightColorOnHover) !important;
+}
+
+#emoji-picker2{
+    width: 80%;
+}

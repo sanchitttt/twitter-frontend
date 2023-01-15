@@ -1,0 +1,4 @@
+#dmsContainer{
+    display: flex;
+    flex-direction: column;
+}

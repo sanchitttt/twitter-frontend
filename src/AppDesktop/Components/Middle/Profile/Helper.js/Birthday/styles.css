@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+.birthday-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    color: #536471;
+    margin-right: 12px;
+    font-family: 'Poppins';
+}
+
+.birthday-img {
+    width: 18.75px;
+    height: 18.75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.birthday-img img {
+    width: 13px;
+    height: 15px;
+}

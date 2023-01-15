@@ -1,0 +1,40 @@
+.custom-card{
+    /* background-color: grey; */
+}
+
+.post-card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0px;
+    width: 100% !important;
+    border-top: 1px solid #eff3f4;
+}
+
+.postCard-leftSide-container {
+    margin-top: 25px;
+    margin-right: 20px;
+}
+
+.postCard-rightSide-container {
+    flex-grow: 15;
+}
+
+.postCard-rightSide-container {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width:412px){
+    .postCard-leftSide-container {
+        /* margin-top: 25px; */
+        margin-right: 10px;
+    }
+    
+}
+
+@media screen and (max-width:600px){
+    .post-card-container{
+        width: 100%;
+    }
+}

@@ -1,0 +1,11 @@
+#explorePage{
+    display: flex;
+    width: 990px;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+#explorePageRight{
+    display: flex;
+    justify-content: center;
+}

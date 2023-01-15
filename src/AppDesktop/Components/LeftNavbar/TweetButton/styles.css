@@ -1,0 +1,54 @@
+#navBarTweetButtonBig{
+    background-color: #1D9BF0;
+    border-radius: 9999px;
+    color:white;
+    width:226px;
+    height:52px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins';
+    font-weight: bolder;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+#navBarTweetButtonBig:hover{
+    background-color: rgba(26, 140, 216);
+}
+
+#navBarTweetButtonSmall{
+    background-color: #1D9BF0;
+    border-radius: 9999px;
+    color:white;
+    width:50px;
+    height:50px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--fontFamily);
+    font-weight: bolder;
+    transition: 0.2s;
+}
+
+#navBarTweetButtonSmall:hover{
+    background-color: rgba(26, 140, 216);
+}
+
+@media screen and (max-width:1292px) {
+    #navBarTweetButtonBig{
+        display:none;
+    }
+    #navBarTweetButtonSmall{
+        display:flex
+    }
+}
+
+@media screen and (min-width:1292px) {
+    #navBarTweetButtonBig{
+        display:flex;
+    }
+    #navBarTweetButtonSmall{
+        display:none;
+    }
+}

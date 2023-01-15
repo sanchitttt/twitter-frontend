@@ -1,0 +1,12 @@
+#homePostTextHelper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    color: #1D9BF0;
+    font-weight: bold;
+}
+
+#homePostTextHelperText{
+    margin-left: 5px;
+}

@@ -1,0 +1,20 @@
+#homeCheckBox{
+    width: 106.8px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #536471;
+    border-radius: 9999px;
+}
+
+#homeCheckBoxText{
+    font-size: 14px;
+    color: #1D9BF0;
+    font-weight: bold;
+}
+
+#homeCheckBoxImg{
+    margin-top: -1px;
+    margin-left: 2px;;
+}

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+.fl-r {
+    /*flex row*/
+    display: flex;
+    flex-direction: row;
+}
+
+.jc-c {
+    /* justifyContent center*/
+    justify-content: center;
+}
+
+.jc-fs {
+    /* justifyContent flex-start*/
+    justify-content: flex-start;
+}
+
+.jc-fe {
+    /*justifyContent flex-end */
+    justify-content: flex-end;
+}
+
+.fl-c {
+    display: flex;
+    flex-direction: column;
+}
+
+.al-c {
+    align-items: center;
+}
+
+.font20 {
+    font-size: 20px;
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+.colorBlack {
+    color: #0f1419;
+}
+
+.colorGrey{
+    color: #536471;
+}
+
+.borderCircular{
+    border-radius: 9999px;
+}
+

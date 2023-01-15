@@ -1,0 +1,58 @@
+#compose-message{
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+#compose-message-heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#compose-message-heading-image{
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+}
+
+#compose-message-heading-image:hover{
+    background-color: rgba(15, 20, 25, 0.1);
+}
+
+#compose-message-heading-image img{
+    width: 20px;
+    height: 20px;
+}
+
+#compose-message-heading-text{
+    font-size: 20px;
+    font-weight: bold;
+    color: #0f1419;
+}
+
+#compose-message-next-btn{
+    width: 65px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    margin-right: 15px;
+}
+
+#compose-message-searchBar{
+    display: flex;
+}
+
+#compose-message-searchBar-left{
+    width: 15%;
+}
+
+#compose-message-searchBar-right{
+    width: 85%;
+}

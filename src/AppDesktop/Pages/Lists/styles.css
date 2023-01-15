@@ -1,0 +1,12 @@
+#listsPage{
+    display: flex;
+    width: 990px;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+#lists-right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

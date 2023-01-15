@@ -1,0 +1,40 @@
+/*  PRIMARY BUTTON */
+
+.primary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 36px;
+    border-radius: 9999px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    background: #1D9BF0;
+}
+
+.primary-button-black {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 36px;
+    border-radius: 9999px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    background: #0F1419;
+}
+
+.primary-button:hover {
+    background-color: rgba(26, 140, 216) !important;
+}
+
+.primary-button-black:hover {
+    background-color: rgba(63,67,71);
+}
+

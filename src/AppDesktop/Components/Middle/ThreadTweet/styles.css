@@ -1,0 +1,10 @@
+.threadTweetContainer{
+    width: 700px;
+    background-color: wheat;
+    min-height: 337px;
+    max-height: 920px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+

@@ -1,0 +1,53 @@
+#rightSide-searchBar-containerM {
+    width: 231px;
+    background: rgb(247, 249, 249);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 28px;
+    border-radius: 9999px;
+    font-family: 'Poppins' !important;
+  }
+  
+  #rightSide-searchIcon {
+    padding-left: 20px;
+  }
+  
+  #rightSideSearchBarInput {
+    width: 100%;
+    padding-left: 25px;
+    background: transparent;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  
+  #searchBarCloseIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+  }
+  
+  #searchBarTippy {
+    width: 350px;
+    height: 100px;
+    background: white;
+    text-align: center;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    z-index: 1000;
+  }
+  
+  #searchBarTippyNoItemsText {
+    margin-top: 10px;
+  }
+  
+  #searchBarMasterContainer {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins' !important;
+  }
+  

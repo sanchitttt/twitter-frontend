@@ -1,0 +1,12 @@
+#profilePage{
+    display: flex;
+    width: 990px;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+#profilePage-right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

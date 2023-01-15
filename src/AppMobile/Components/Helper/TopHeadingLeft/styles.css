@@ -1,0 +1,30 @@
+.topHeadingLeft{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topHeadingLeftImg{
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
+.topHeadingLeftImg img{
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+}
+
+.topHeadingLeftText{
+    font-size: 17px;
+    color: #0f1419;
+    font-weight: bold;
+    font-family: 'Poppins';
+}

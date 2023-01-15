@@ -1,0 +1,73 @@
+#logoutPage{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.4);
+}
+
+#logoutPageTippy{
+    width: 320px;
+    min-height: 356px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+}
+
+#logoutPageTippyImageContainer{
+    margin-top: 10px;
+}
+#logoutPageTippyImageContainer img{
+    width: 37px;
+    height: 37px;
+}
+
+#logoutTippyHeading{
+    color: #0f1419;
+    font-size: 20px;
+    font-family: 'Poppins';
+    font-weight: bold;
+}
+
+#logoutTippySubtext{
+    width: 256px;
+    font-size: 15px;
+    font-family: 'Poppins';
+    color: #536471;
+}
+
+
+#logoutBlackBtn{
+    width: 256px;
+    height: 44px;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 999px;
+    margin:5px 0px;
+    cursor: pointer;
+    font-family: 'Poppins';
+}
+
+#logoutCancelBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 256px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid #eff3f4;
+    margin-top:5px;
+    cursor: pointer;
+    font-family: 'Poppins';
+}
+
+#logoutButtonsContainer{
+    margin-bottom: 25px;
+}

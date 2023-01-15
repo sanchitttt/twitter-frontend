@@ -1,0 +1,17 @@
+
+.rightSideInsideContainer {
+     display:flex;
+     flex-direction:column;
+     align-items:center;
+    
+}
+
+.rightSide-whats-happening{
+  font-family: inherit;
+}
+
+@media screen and (max-width:1014px){
+    .rightSideInsideContainer{
+      display: none !important;
+    }
+  }

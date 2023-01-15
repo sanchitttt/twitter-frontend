@@ -1,0 +1,48 @@
+#new-message{
+    width: 600px;
+    border-right: 1px solid #eff3f4;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#new-message-center{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 165px;
+    margin-bottom: 150px;
+    margin-left: 50px;
+}
+
+#new-message-center-firstRow{
+    font-size: 31px;
+    font-weight: bold;
+    font-family: 'Poppins';
+    color: #0f1419;
+}
+
+#new-message-center-secondRow{
+    font-size: 15px;
+    font-family: 'Poppins';
+    color: #546471;
+    width: 336px;
+}
+
+#new-message-center-thirdRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins';
+    width: 175px;
+    height: 52px;
+    background-color: #1d9bf0;
+    color:white;
+    border-radius: 9999px;
+}
+
+#new-message-center-thirdRow:hover{
+    background-color: rgba(26, 140, 216);
+}
