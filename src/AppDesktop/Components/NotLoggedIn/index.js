@@ -6,6 +6,7 @@ import ColorContext from '../../Contexts/ColorContext';
 import NavButton from '../LeftNavbar/NavButton';
 import Explore from '../Middle/Explore';
 import Footer from './Footer';
+import {BACKEND_URL} from '../../../config/config';
 import './styles.css';
 
 const navBar = [
@@ -17,15 +18,17 @@ function NotLoggedIn() {
     const [activeUrl, setActiveUrl] = useState('Explore');
     const navigate = useNavigate();
 
+
     useEffect(() => {
         const makeReq = async () => {
             try {
-                const result = await axios.get('http://localhost:8082/auth/login/success', { withCredentials: true });
+                const result = await axios.get(`${BACKEND_URL}/auth/login/success`, { withCredentials: true });
                 if (result.status === 200) {
                     navigate('/home');
                 }
             } catch (error) {
                 // Do nothing
+                // throw error;
             }
         }
         makeReq();

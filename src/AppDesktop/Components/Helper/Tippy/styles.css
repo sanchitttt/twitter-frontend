@@ -26,6 +26,7 @@
 .tippyWidget-text {
     margin-left: 10px;
     font-weight: bold;
+    font-family: 'Poppins';
 }
 
 .tippyWidget {
@@ -43,6 +44,7 @@
 .tippy-text {
     font-size: 20px;
     font-weight: bolder;
+    font-family: 'Poppins';
 }
 
 .tippyWidget-left {

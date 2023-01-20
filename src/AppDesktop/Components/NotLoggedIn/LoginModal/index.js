@@ -1,15 +1,18 @@
 import React from 'react';
 import axios from 'axios';
+import { BACKEND_URL } from '../../../../config/config';
 import './styles.css';
 
-const BACKEND_URL = 'http://localhost:8082/'
-const LOGIN_URL = BACKEND_URL + 'auth/google/callback';
-
+console.log(BACKEND_URL)
 function LoginModal({ closeHandler }) {
     const loginHandler = async () => {
-        window.open(
-            'http://localhost:8082/auth/google', "_self"
-        )
+        try {
+            window.open(
+                `${BACKEND_URL}/auth/google`, "_self"
+            )
+        } catch (error) {
+            throw error;
+        }
     }
     return (
         <div id='login-modal'>

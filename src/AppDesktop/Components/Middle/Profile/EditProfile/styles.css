@@ -1,0 +1,186 @@
+#editProfileModal {
+    width: 600px;
+    height: 650px;
+    background-color: white;
+    border-radius: 15px;
+    overflow-y: scroll;
+    padding: 20px 0px;
+}
+
+#editProfileTopRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#editProfileTopRowLeft {
+    /* margin-top: 15px; */
+    margin-left: 10px;
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+#editProfileTopRowLeftImgContainer {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 999px;
+}
+
+.editProfileNameLengthLimit{
+    font-size: 10px;
+    color: #536471;
+    font-family: 'Poppins';
+    display: flex;
+    width: 50px;
+}
+
+#editProfileTopRowLeftImgContainer img {
+    width: 20px;
+    height: 20px;
+}
+
+#editProfileTopRowMainText {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+
+#editProfileTopRowRight {
+    /* margin-top: 15px; */
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#editProfileFourthRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
+#editProfileFifthRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+#editProfileSixthRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+#editProfileSeventhRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+#editProfileBannerRow {
+    width: 100%;
+    height: 193px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+}
+
+#editProfileBannerRowMiddleUploadIcon {
+    background-color: rgba(15, 20, 25, 0.75);
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 999px;
+}
+
+#editProfileEditBirthdayText{
+    font-size: 16px;
+    margin-left: 15px;
+    font-family: 'Poppins';
+    margin-top: 15px;
+    color: #536471;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+}
+#editProfileNinthRow{
+    margin-left: 15px;
+    font-family: 'Poppins';
+    font-size: 20px;
+    margin-top: 15px;
+}
+#editProfileEditDateHighlighted{
+    font-size: 15px;
+    color: #1d9bf0;
+    font-family: 'Poppins';
+}
+
+#editProfileBannerRowMiddleUploadIcon img{
+    width: 20px;
+    height: 20px;
+}
+
+#editProfileThirdRow{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#editProfileThirdRowProfilePictureContainer{
+    width: 112px;
+    height: 112px;
+    border-radius: 999px;
+    margin-top: -54px;
+    margin-left: 15px;
+    border: 3px solid #fff;
+}
+
+#editProfileThirdRowProfilePictureContainer img{
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+   
+}
+
+#editProfileBannerRowMiddleUploadIcon:hover{
+    background-color: rgba(15, 20, 25, 0.5);
+}
+
+#editProfileTopRowRightSave {
+    width: 65px;
+    height: 32px;
+    background-color: black;
+    border-radius: 999px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-family: 'Poppins';
+    margin-right: 15px;
+}
+
+#editProfileTopRowLeftImgContainer:hover {
+    background-color: rgba(15, 20, 25, 0.1);
+}

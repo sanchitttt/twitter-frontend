@@ -1,4 +1,4 @@
-#homePostTextHelper{
+.homePostTextHelper{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -9,4 +9,5 @@
 
 #homePostTextHelperText{
     margin-left: 5px;
+    font-family: 'Poppins';
 }

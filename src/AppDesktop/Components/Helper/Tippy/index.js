@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import './styles.css';
 
-function Tippy({audience,audienceHandler}) {
+function Tippy({audience,audienceHandler,setTweetsThreadAudience}) {
   
   const everyoneHandler = () => {
-    audienceHandler('everyone');
+    if(setTweetsThreadAudience){
+      setTweetsThreadAudience('everyone');
+      audienceHandler('everyone');
+    }
+    else{
+      audienceHandler('everyone');
+    }
+
 
   }
 
   const circleHandler = () => {
-    audienceHandler('circle');
+    if(setTweetsThreadAudience){
+      setTweetsThreadAudience('circle');
+      audienceHandler('circle');
+    }
+    else{
+      audienceHandler('circle');
+    }
   }
 
   return (

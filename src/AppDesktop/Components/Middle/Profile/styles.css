@@ -25,6 +25,14 @@
     align-items: center;
 }
 
+#editProfileMasterContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #profile-top-heading-left-imgContainer{
     width: 34px;
     height: 34px;

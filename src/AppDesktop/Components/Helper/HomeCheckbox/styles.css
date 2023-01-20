@@ -1,4 +1,4 @@
-#homeCheckBox{
+.homeCheckBox{
     width: 106.8px;
     height: 24px;
     display: flex;
@@ -12,6 +12,7 @@
     font-size: 14px;
     color: #1D9BF0;
     font-weight: bold;
+    font-family: 'Poppins';
 }
 
 #homeCheckBoxImg{

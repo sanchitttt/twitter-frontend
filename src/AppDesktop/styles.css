@@ -18,19 +18,19 @@
 }
 @media screen  and (max-width:1063px){
     #leftSide{
-      margin-left: 450px;
+      /* margin-left: 450px; */
     }
   }
   
   @media screen  and (max-width:933px){
     #leftSide{
-      margin-left: 450px;
+      /* margin-left: 450px; */
     }
   }
   
   @media screen  and (max-width:830px){
     #leftSide{
-      margin-left: 350px;
+      /* margin-left: 350px; */
     }
   }
   

@@ -226,10 +226,10 @@ const TimeZone = () => {
     );
 };
 
-const ScheduleFooter = ({ activeOptionHandler }) => {
+const ScheduleFooter = ({tweetThread, id,activeOptionHandler }) => {
     return (
         <div id="schedule-footer">
-            <div id='schedule-footer-button-container' className="schedule-footer-button-container">
+            <div id={tweetThread?id:'schedule-footer-button-container'} className="schedule-footer-button-container">
                 <div style={{ fontSize: "14px", color: "#1D9BF0" }} onClick={() => activeOptionHandler('unsent-tweets')}>
                     Scheduled Tweets
                 </div>
@@ -252,7 +252,7 @@ const getTrimmedMonth = (month) => {
 };
 
 const ScheduleTweet = React.forwardRef(
-    ({ activeOptionHandler, scheduleObject, scheduleHandler }, ref) => {
+    ({ tweetThread, id,activeOptionHandler, scheduleObject, scheduleHandler }, ref) => {
       const [isThisAnUpdatingSchedule, setIsThisAnUpdatingTweet] = useState(
         false
       );
@@ -430,7 +430,6 @@ const ScheduleTweet = React.forwardRef(
           setTimeError(false);
         }
       };
-      console.log("i got executed");
       return (
         <div ref={ref}>
           {/* {createPortal( */}
@@ -599,7 +598,7 @@ const ScheduleTweet = React.forwardRef(
               <TimeZone />
             </div>
             <hr />
-            <ScheduleFooter activeOptionHandler={activeOptionHandler} />
+            <ScheduleFooter tweetThread={tweetThread} id={id} activeOptionHandler={activeOptionHandler} />
           </div>
           {/* ,document.getElementById('newTweet-schedule'))} */}
         </div>

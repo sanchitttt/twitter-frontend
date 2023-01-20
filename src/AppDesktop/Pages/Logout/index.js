@@ -1,14 +1,20 @@
 import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {BACKEND_URL} from '../../../config/config';
 import './styles.css';
 
 function LogoutPage() {
     const navigate = useNavigate();
     const logoutHandler = async () => {
-        const result = await axios.post('http://localhost:8082/auth/logout', {}, {withCredentials:true});
-        console.log(result);
-        navigate('/');
+        try {
+            const result = await axios.post(`${BACKEND_URL}/auth/logout`, {}, {withCredentials:true});
+            console.log(result);
+            navigate('/');
+            
+        } catch (error) {
+            // throw error;
+        }
     }
     const cancelHandler = () => {
         navigate(-1);

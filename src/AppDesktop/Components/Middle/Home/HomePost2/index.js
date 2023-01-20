@@ -8,14 +8,18 @@ import ScheduleTweet from '../../../Helper/ScheduleTweet/index';
 import UnsentTweets from '../../../Helper/UnsentTweets/index';
 import TippyAudience from '../../../Helper/TippyAudience/index';
 import HomePoll from '../../../Helper/HomePoll/index';
-import { Dialog, Modal } from '@mui/material';
-import EmojiPicker from 'emoji-picker-react';
+import { Dialog, LinearProgress, Modal } from '@mui/material';
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import axios from 'axios';
+import { BACKEND_URL } from '../../../../../config/config';
+import { ImagePreview } from '../Helper/ImageSection';
 
 const postIconsArray = [
   ['file', 'https://i.ibb.co/Z83rNRs/gallery-1.png'],
   ['', 'https://i.ibb.co/BTGcgVR/gif-1.png'],
   ['poll', 'https://i.ibb.co/9GrphjN/polling-1.png'],
-  ['emoji', 'https://i.ibb.co/RQPpgRp/happy-1.png'],
+  ['emoji3', 'https://i.ibb.co/RQPpgRp/happy-1.png'],
   ['schedule', 'https://i.ibb.co/Y2wK2RK/event-1.png'],
   ['location', 'https://i.ibb.co/vhzdpVZ/location-1.png']
 ]
@@ -26,6 +30,15 @@ const style = {
   alignItems: 'center'
 }
 
+const verifyAllPollOptionsExists = (arr, count) => {
+  for (let i = 0; i < count - 1; i++) {
+    if (arr[i] === '') {
+      return false;
+    }
+  }
+  return true;
+}
+
 function HomePost2({
   decrementer,
   forTimeline,
@@ -34,7 +47,17 @@ function HomePost2({
   incrementer,
   firstItemInThread,
   showTweetButton,
-  showAddMoreButton
+  showAddMoreButton,
+  idx,
+  setTweetAllEnabled,
+  tweetAllEnabled,
+  tweets,
+  tweetsThreadAudience,
+  setTweetsThreadAudience,
+  tweetsThreadWhoCanReply,
+  setTweetsThreadWhoCanReply,
+  setShowTweetThread,
+  setProgress
 }) {
   const [text, setText] = useState("");
   const [totalCount, setTotalCount] = useState(0);
@@ -57,8 +80,42 @@ function HomePost2({
   });
   const [whoCanReplyText, setWhoCanReplyText] = useState("Everyone");
   const [showWhoCanReplyTippy, setShowWhoCanReplyTippy] = useState(false);
+  const [pollDate, setPollDate] = useState({ changed: false, hours: null, minutes: null, days: null });
+  const [pollOptions, setPollOptions] = useState({});
+  const [imageList, setImageList] = useState([]);
+
 
   const myRef = useRef(null);
+  const emojiPickerId = `emoji-picker${idx}`
+  const homeEmojiThreadImageId = `home-emoji-thread-image${idx}`
+  const homePostTextHelperId = `homePostTextHelper${idx}`;
+  const postTippyId = `post-tippy${idx}`;
+  const unsentTweetsMasterContainerId = `unsentTweetsMasterContainer${idx}`
+  const scheduleFooterButtonContainerId = `scheduleFooterButtonContainer${idx};`
+  const homePostInputId = `homePostInput${idx}`;
+
+  const handleFiles = (files) => {
+    tweets[idx].attachments = files.base64;
+    setImageList(files.base64);
+  };
+
+  useEffect(() => {
+    if (pollDate.changed) {
+
+      const result = verifyAllPollOptionsExists(Object.values(pollOptions.values), pollOptions.count);
+      if (result) {
+        if (!tweetAllEnabled && text.length) setTweetAllEnabled(true)
+        tweets[idx].poll.expiresAt = pollDate;
+        tweets[idx].poll.options = pollOptions;
+      }
+      else {
+        if (tweetAllEnabled) setTweetAllEnabled(false);
+        tweets[idx].poll.expiresAt = null;
+        tweets[idx].poll.options = null;
+      }
+
+    }
+  }, [pollOptions, pollDate])
 
   useEffect(() => {
     const currWidth = document.documentElement.clientWidth;
@@ -93,36 +150,62 @@ function HomePost2({
     }
   };
   const textHandler = (e) => {
+    tweets[idx].tweetText = e.target.value;
     setText(e.target.value);
-    // console.log(myRef.current.value.length)
-    // if (myRef.current.value.length >= 280) {
-    //     // Do nothing
-    // }
-    // else {
-    console.log(value);
+    const input1 = document.getElementById('homePostInput1').value;
+    if (e.target.value.length === 0) {
+      if (tweetAllEnabled) setTweetAllEnabled(false);
+    }
+    else if (!tweetAllEnabled && input1.length) {
+      setTweetAllEnabled(true);
+    }
     setValue(Math.ceil((myRef.current.value.length / 280) * 100));
-    // }
     let rows = Math.ceil(totalCount / rowThreshold);
-    // console.log(myRef.current.value.length,currentWordLength,rowThreshold,rows);
-    document.getElementById("home-post-input").rows = rows;
+    document.getElementById(homePostInputId).rows = rows;
   };
 
   const emojiClickHandler = (e) => {
-    setText((text) => text + e.emoji);
+    setText((text) => text + e.native);
+    tweets[idx].tweetText = tweets[idx].tweetText + e.native;
   };
+
+  const tweetAllHandler = async () => {
+    let id;
+    const fetch = async () => {
+      try {
+        const result = await axios.post(`${BACKEND_URL}/tweet/new/thread`, tweets, { withCredentials: true });
+        if (result) {
+          id = setTimeout(() => {
+            setProgress(100);
+            setTimeout(() => {
+              setShowTweetThread(false);
+            }, 400);
+          }, 2000);
+        }
+      } catch (error) {
+        setProgress(0);
+      }
+    }
+    if (tweetAllEnabled) {
+      fetch();
+      return () => {
+        clearTimeout(id);
+      }
+    }
+  }
 
   useEffect(() => {
     document.addEventListener("click", (e) => {
-      let emojiDiv = document.getElementById("emoji-picker");
-      let emojiImg = document.getElementById("home-emoji-image");
+      let emojiDiv = document.getElementById(emojiPickerId);
+      let emojiImg = document.getElementById(homeEmojiThreadImageId);
       let unsentTweetsContainer = document.getElementById(
-        "unsent-tweets-master-container"
+        unsentTweetsMasterContainerId
       );
       let scheduleTweetTextDiv = document.getElementById(
-        "schedule-footer-button-container"
+        scheduleFooterButtonContainerId
       );
-      let textHelperDiv = document.getElementById("homePostTextHelper");
-      let tippy = document.getElementById("post-tippy");
+      let textHelperDiv = document.getElementById(homePostTextHelperId);
+      let tippy = document.getElementById(postTippyId);
 
       if (emojiDiv) {
         if (emojiDiv.contains(e.target) || emojiImg.contains(e.target)) {
@@ -156,7 +239,6 @@ function HomePost2({
     <div
       id="home-post-container"
       style={{
-        // padding : forTimeline? '50px':'0px',
         borderRadius: forTimeline ? "15px" : "0px"
       }}
     >
@@ -196,16 +278,14 @@ function HomePost2({
           </div>
         )}
 
-        {/* <div className="homeCheckBoxContainer"> */}
         {hasClicked && firstItemInThread && (
-          <HomeCheckbox audience={audience} audienceHandler={setAudience} />
+          <HomeCheckbox audience={audience} setTweetsThreadAudience={setTweetsThreadAudience} audienceHandler={setAudience} />
         )}
-        {/* </div> */}
         {isTheLastTweet && hasClicked && (
-          <div style={{display:'flex', justifyContent:'flex-end'}}>
-          <div className="homePostCloseIconContainer" onClick={decrementer}>
-            <img src="https://i.ibb.co/xsZmvWC/close-blue.png" alt="close" />
-          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <div className="homePostCloseIconContainer" onClick={decrementer}>
+              <img src="https://i.ibb.co/xsZmvWC/close-blue.png" alt="close" />
+            </div>
           </div>
         )}
         <textarea
@@ -218,7 +298,7 @@ function HomePost2({
                 : "What's happening?"
           }
           ref={myRef}
-          id="home-post-input"
+          id={homePostInputId}
           rows="1"
           cols={textAreaCols}
           onFocus={focusHandler}
@@ -226,13 +306,16 @@ function HomePost2({
           onKeyDown={keyDownHandler}
           onChange={textHandler}
         />
-
+        <div style={{ maxWidth: '500px', maxHeight: '500px' }}><ImagePreview imageList={imageList} /></div>
         {activeOptionClicked === "poll" && (
-          <HomePoll activeOptionHandler={setActiveOptionClicked} />
+          <HomePoll pollOptions={pollOptions} pollDate={pollDate} setPollOptions={setPollOptions} setPollDate={setPollDate} activeOptionHandler={setActiveOptionClicked} />
         )}
-        {activeOptionClicked === "emoji" && (
-          <div id="emoji-picker">
-            <EmojiPicker onEmojiClick={emojiClickHandler} />
+        {activeOptionClicked === "emoji3" && (
+          <div id={emojiPickerId} style={{ width: '356px' }}>
+            <Picker
+              data={data}
+              onEmojiSelect={emojiClickHandler}
+            />
           </div>
         )}
         {activeOptionClicked === "schedule" && (
@@ -242,6 +325,8 @@ function HomePost2({
             open={activeOptionClicked === "schedule"}
           >
             <ScheduleTweet
+              tweetThread={true}
+              id={scheduleFooterButtonContainerId}
               scheduleHandler={setIsAScheduledTweet}
               scheduleObject={isAScheduledTweet}
               activeOptionHandler={setActiveOptionClicked}
@@ -250,13 +335,16 @@ function HomePost2({
         )}
         {activeOptionClicked === "unsent-tweets" && (
           <Modal sx={style} open={activeOptionClicked === "unsent-tweets"}>
-            <div id="unsent-tweets-master-container">
+            <div id={unsentTweetsMasterContainerId}>
               <UnsentTweets activeOptionHandler={setActiveOptionClicked} />
             </div>
           </Modal>
         )}
         {showWhoCanReplyTippy && (
           <TippyAudience
+            setTweetsThreadWhoCanReply={setTweetsThreadWhoCanReply}
+            tweetThread={true}
+            id={postTippyId}
             whoCanReply={whoCanReplyText}
             whoCanReplyHandler={setWhoCanReplyText}
             showTippy={setShowWhoCanReplyTippy}
@@ -270,6 +358,9 @@ function HomePost2({
           >
             {firstItemInThread && (
               <HomePostTextHelper
+
+                tweetThread={true}
+                id={homePostTextHelperId}
                 disabled={audience === "circle"}
                 url={
                   audience === "circle"
@@ -289,6 +380,9 @@ function HomePost2({
             {postIconsArray.map((iconUrl, idx) => {
               return (
                 <PostIcon
+                  homeEmojiThreadImageId={homeEmojiThreadImageId}
+                  handleFiles={handleFiles}
+                  partOfAThread={partOfAThread}
                   key={idx}
                   activeOptionHandler={setActiveOptionClicked}
                   type={iconUrl[0]}
@@ -325,14 +419,16 @@ function HomePost2({
 
             <div style={{ marginLeft: "20px" }}>
               {showTweetButton && partOfAThread && (
-                <PrimaryButton isNotActive={text === ""} bgColor="1D98F0">
-                  Tweet all
-                </PrimaryButton>
-              )}
-              {!partOfAThread && (
-                <PrimaryButton isNotActive={text === ""} bgColor="1D98F0">
-                  Tweet all
-                </PrimaryButton>
+                <div onClick={() => {
+                  setProgress(25);
+                  tweetAllHandler();
+
+                }}  >
+                  <PrimaryButton isNotActive={text === "" || tweetAllEnabled === false} bgColor="1D98F0">
+                    Tweet all
+                  </PrimaryButton>
+                </div>
+
               )}
             </div>
           </div>

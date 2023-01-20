@@ -1,0 +1,71 @@
+.discardThreadContainer{
+    width: 320px;
+    height: 260px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.discardThreadContainerMainText{
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Poppins';
+    color: #0f1419;
+    width: 70%;
+}
+
+.discardThreadContainerSubText{
+    margin-top: 10px;
+    font-size: 15px;
+    font-family: 'Poppins';
+    color: #536471;
+    width: 70%;
+
+}
+
+.discardThreadContainerButtonsContainer{
+    margin-top: 20px;
+}
+
+.discardThreadContainerButtonDiscard{
+    width: 256px;
+    height: 44px;
+    border-radius: 999px;
+    background-color: #f4212e;
+    transition: 0.25s;
+    color:white;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins';
+}
+
+.discardThreadContainerButtonDiscard:hover{
+    background-color: rgba(220,40,21);
+}
+
+
+.discardThreadContainerButtonCancel{
+    margin-top: 10px;
+    font-family: 'Poppins';
+    width: 256px;
+    height: 44px;
+    border-radius: 999px;
+    background-color: white;
+    transition: 0.25s;
+    color:black;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #d4dce2;
+}
+
+.discardThreadContainerButtonCancel:hover{
+    background-color: #e4e4ec;
+}

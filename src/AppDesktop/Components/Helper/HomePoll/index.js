@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import './styles.css';
 import TextField from "@mui/material/TextField";
 import { InputAdornment, InputLabel, MenuItem } from '@mui/material'
@@ -52,7 +52,7 @@ for (let i = 0; i <= 59; i++) {
   } else if (i >= 24 && i <= 59) minutesArr.push(i);
 }
 
-const PollsInput = () => {
+const PollsInput = ({ pollOptions, setPollOptions }) => {
   const [values, dispatch] = useReducer(reducerFn, initialState);
   const [count, setCount] = useState(3);
   const [pollsArr, setPollsArr] = useState([
@@ -68,6 +68,11 @@ const PollsInput = () => {
       setActiveOn((activeOn) => activeOn + 1);
     }
   };
+
+  useEffect(() => {
+    // console.log(values);
+    if (pollOptions && setPollOptions) setPollOptions({ values: values, count: count })
+  }, [values]);
 
   return pollsArr.map((item, idx) => {
     const number = item[1];
@@ -110,18 +115,21 @@ const PollsInput = () => {
   });
 };
 
-const PollsDate = () => {
+const PollsDate = ({ pollDate, setPollDate }) => {
   const [days, setDays] = useState(1);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
 
   const handleDays = (e) => {
+    if(setPollDate) setPollDate({ ...pollDate, changed: true, days: e.target.value })
     setDays(e.target.value);
   };
   const handleHours = (e) => {
+    if(setPollDate) setPollDate({ ...pollDate, changed: true, hours: e.target.value })
     setHours(e.target.value);
   };
   const handleMinutes = (e) => {
+    if(setPollDate) setPollDate({ ...pollDate, changed: true, minutes: e.target.value })
     setMinutes(e.target.value);
   };
 
@@ -197,21 +205,24 @@ const PollsDate = () => {
   );
 };
 
-const HomePoll = ({ activeOptionHandler }) => {
+const HomePoll = ({ pollOptions, pollDate, setPollDate, setPollOptions, activeOptionHandler }) => {
+  useEffect(() => {
+    if(pollDate) setPollDate({ ...pollDate, changed: true, days: 1 })
+  }, []);
   return (
     <>
       <div className="container-fluid">
         <div className="card" style={{}}>
           <div className="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">
                 <div className="card-body">
-                  <PollsInput />
+                  <PollsInput pollOptions={pollOptions} setPollOptions={setPollOptions} />
                 </div>
               </li>
               <li className="list-group-item">
                 <div className="card-body">
-                  <PollsDate />
+                  <PollsDate pollDate={pollDate} setPollDate={setPollDate} />
                 </div>
               </li>
               <li className="list-group-item">
@@ -221,7 +232,11 @@ const HomePoll = ({ activeOptionHandler }) => {
                     size="small"
                     color="error"
                     fullWidth
-                    onClick={() => activeOptionHandler(null)}
+                    onClick={() => {
+                      activeOptionHandler(null)
+                      if(pollDate) setPollDate(null);
+                      if(pollOptions) setPollOptions([]);
+                    }}
                   >
                     Remove poll
                   </Button>

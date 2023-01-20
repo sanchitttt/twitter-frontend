@@ -8,9 +8,14 @@ import ScheduleTweet from '../../../Helper/ScheduleTweet/index';
 import UnsentTweets from '../../../Helper/UnsentTweets/index';
 import TippyAudience from '../../../Helper/TippyAudience/index';
 import HomePoll from '../../../Helper/HomePoll/index';
-import { Dialog, Modal } from '@mui/material';
-import EmojiPicker from 'emoji-picker-react';
+import { LinearProgress, Modal } from '@mui/material';
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
 import TweetsThread from '../TweetThread';
+import { ImagePreview } from '../Helper/ImageSection';
+import axios from 'axios';
+import { BACKEND_URL } from '../../../../../config/config';
+
 
 
 
@@ -42,7 +47,15 @@ function HomePost({ forTimeline }) {
     const [isAScheduledTweet, setIsAScheduledTweet] = useState({ bool: false, text: '', month: null, year: null, date: null, hour: null, minute: null, amPm: null });
     const [whoCanReplyText, setWhoCanReplyText] = useState("Everyone");
     const [showWhoCanReplyTippy, setShowWhoCanReplyTippy] = useState(false);
-    const [showTweetThread,setShowTweetThread] = useState(false);
+    const [showTweetThread, setShowTweetThread] = useState(false);
+    const [imageList, setImageList] = useState([]);
+    const [progress, setProgress] = useState(0);
+    const [pollDate, setPollDate] = useState({ changed: false, hours: null, minutes: null, days: null });
+    const [pollOptions, setPollOptions] = useState({});
+
+    const handleFiles = (files) => {
+        setImageList(files.base64);
+    };
 
     const myRef = useRef(null);
 
@@ -58,6 +71,39 @@ function HomePost({ forTimeline }) {
         }
     }, []);
 
+
+    const tweetHandler = async () => {
+        let tweetEnabled = text.length > 0;
+        let id;
+        const fetch = async () => {
+            try {
+                let obj = {
+                    tweetText: text,
+                    poll: { expiresAt: pollDate, options: pollOptions },
+                    audience: audience,
+                    whoCanReply: whoCanReplyText,
+                    attachments: imageList
+                }
+                const result = await axios.post(`${BACKEND_URL}/tweet/new/tweet`, obj, { withCredentials: true });
+                if (result) {
+                    id = setTimeout(() => {
+                        setProgress(100);
+                        setTimeout(() => {
+                            setProgress(0);
+                        },500)
+                    }, 2000);
+                }
+            } catch (error) {
+                setProgress(0);
+            }
+        }
+        if (tweetEnabled) {
+            fetch();
+            return () => {
+                clearTimeout(id);
+            }
+        }
+    }
 
     const focusHandler = () => {
         if (!hasClicked) {
@@ -80,28 +126,21 @@ function HomePost({ forTimeline }) {
             setTotalCount(count => count + 1);
         }
     }
+
     const textHandler = (e) => {
         setText(e.target.value);
-        // console.log(myRef.current.value.length)
-        // if (myRef.current.value.length >= 280) {
-        //     // Do nothing
-        // }
-        // else {
-        console.log(value)
         setValue(Math.ceil((myRef.current.value.length / 280) * 100))
-        // }
         let rows = Math.ceil(totalCount / rowThreshold);
-        // console.log(myRef.current.value.length,currentWordLength,rowThreshold,rows);
         document.getElementById('home-post-input').rows = rows;
     }
 
     const emojiClickHandler = (e) => {
-        setText(text => text + e.emoji);
+        setText(text => text + e.native);
     }
 
     useEffect(() => {
         document.addEventListener('click', (e) => {
-            let emojiDiv = document.getElementById('emoji-picker');
+            let emojiDiv = document.getElementById('emoji-picker-normal');
             let emojiImg = document.getElementById('home-emoji-image');
             let unsentTweetsContainer = document.getElementById('unsent-tweets-master-container');
             let scheduleTweetTextDiv = document.getElementById('schedule-footer-button-container');
@@ -141,94 +180,121 @@ function HomePost({ forTimeline }) {
 
     return (
         <>
-        <div id='home-post-container'
-            style={{
-                // padding : forTimeline? '50px':'0px',
-                borderRadius: forTimeline ? '15px' : '0px'
-            }}
-        >
-            <div id='home-post-left'>
-                <div id='home-post-left-top'>
-                    <img
-                        alt='someImg'
-                        src='https://i.ibb.co/p4R5q3P/1655230 024525.jpg'
-                        className='rounded-image'
-                        width='48px'
-                        height='48px' />
-                </div>
-                <div>
+            {progress > 0 && <div>
+                <LinearProgress
+                    aria-describedby="progress-bar"
+                    variant="determinate"
+                    value={progress}
+                />
+            </div>}
 
-                </div>
 
-            </div>
+            <div id='home-post-container'
+                style={{
+                    borderRadius: forTimeline ? '15px' : '0px'
+                }}
+            >
+                {/* <div style={{width:'100%'}}>
+                
+                </div> */}
 
-            <div id='home-post-right'>
-                {isAScheduledTweet.bool &&
-                    <div onClick={() => setActiveOptionClicked('schedule')} className='home-schedule-text-hover' style={{ display: 'flex', color: '#536471', fontSize: '13px', marginBottom: '15px' }}>
+                <div id='home-post-left'>
+                    <div id='home-post-left-top'>
                         <img
-                            src="https://thumbs4.imagebam.com/98/f9/99/MEHU2MK_t.png"
-                            width="18px"
-                            height="18px"
-                            alt="schedule-date-picker-img"
-                            style={{ marginRight: "5px" }}
+                            alt='someImg'
+                            src='https://i.ibb.co/p4R5q3P/1655230 024525.jpg'
+                            className='rounded-image'
+                            width='48px'
+                            height='48px' />
+                    </div>
+                    <div>
+
+                    </div>
+
+                </div>
+
+                <div id='home-post-right'>
+                    {isAScheduledTweet.bool &&
+                        <div onClick={() => setActiveOptionClicked('schedule')} className='home-schedule-text-hover' style={{ display: 'flex', color: '#536471', fontSize: '13px', marginBottom: '15px' }}>
+                            <img
+                                src="https://thumbs4.imagebam.com/98/f9/99/MEHU2MK_t.png"
+                                width="18px"
+                                height="18px"
+                                alt="schedule-date-picker-img"
+                                style={{ marginRight: "5px" }}
+                            />
+                            {isAScheduledTweet.text}
+                        </div>
+                    }
+
+                    {hasClicked && <HomeCheckbox audience={audience} audienceHandler={setAudience} />}
+                    <textarea style={{ color: 'black' }} placeholder={activeOptionClicked === 'poll' ? "Ask a question" : "What's happening?"} ref={myRef} id='home-post-input' rows='1' cols={textAreaCols} onFocus={focusHandler} value={text} onKeyDown={keyDownHandler} onChange={textHandler} />
+                    <div style={{ maxWidth: '500px', maxHeight: '500px' }}><ImagePreview imageList={imageList} /></div>
+                    {activeOptionClicked === 'poll' && <HomePoll pollOptions={pollOptions} pollDate={pollDate} setPollOptions={setPollOptions} setPollDate={setPollDate} activeOptionHandler={setActiveOptionClicked} />}
+                    {activeOptionClicked === 'emoji' && <div id='emoji-picker-normal' style={{ width: '356px' }}>
+                        <Picker
+                            data={data}
+                            onEmojiSelect={emojiClickHandler}
                         />
-                        {isAScheduledTweet.text}
-                    </div>
-                }
+                    </div>}
+                    {activeOptionClicked === 'schedule' && <Modal sx={style} onClose={() => setActiveOptionClicked(null)} open={activeOptionClicked === "schedule"}>
+                        <ScheduleTweet scheduleHandler={setIsAScheduledTweet} scheduleObject={isAScheduledTweet} activeOptionHandler={setActiveOptionClicked} /></Modal>}
+                    {activeOptionClicked === 'unsent-tweets' && <Modal sx={style} open={activeOptionClicked === 'unsent-tweets'}><div id='unsent-tweets-master-container'><UnsentTweets activeOptionHandler={setActiveOptionClicked} /></div></Modal>}
+                    {showWhoCanReplyTippy && (
+                        <TippyAudience
+                            whoCanReply={whoCanReplyText}
+                            whoCanReplyHandler={setWhoCanReplyText}
+                            showTippy={setShowWhoCanReplyTippy}
+                        />
+                    )}
+                    {hasClicked &&
+                        <div onClick={() => {
+                            if (audience !== 'circle') setShowWhoCanReplyTippy(true)
+                        }}>
+                            <HomePostTextHelper
+                                disabled={audience === 'circle'}
+                                url={audience === 'circle' ? 'https://i.ibb.co/n7Gsfw7/lock-blue.png' : 'https://i.ibb.co/NnThJNG/earth-blue.png'}>
+                                {audience === 'circle' ? 'Only your Twitter Circle can reply' : whoCanReplyText}
+                            </HomePostTextHelper>
+                        </div>
 
-                {hasClicked && <HomeCheckbox audience={audience} audienceHandler={setAudience} />}
-                <textarea style={{ color: 'black' }} placeholder={activeOptionClicked === 'poll' ? "Ask a question" : "What's happening?"} ref={myRef} id='home-post-input' rows='1' cols={textAreaCols} onFocus={focusHandler} value={text} onKeyDown={keyDownHandler} onChange={textHandler} />
-                {activeOptionClicked === 'poll' && <HomePoll activeOptionHandler={setActiveOptionClicked} />}
-                {activeOptionClicked === 'emoji' && <div id='emoji-picker'><EmojiPicker onEmojiClick={emojiClickHandler} /></div>}
-                {activeOptionClicked === 'schedule' && <Modal sx={style} onClose={() => setActiveOptionClicked(null)} open={activeOptionClicked === "schedule"}>
-                    <ScheduleTweet scheduleHandler={setIsAScheduledTweet} scheduleObject={isAScheduledTweet} activeOptionHandler={setActiveOptionClicked} /></Modal>}
-                {activeOptionClicked === 'unsent-tweets' && <Modal sx={style} open={activeOptionClicked === 'unsent-tweets'}><div id='unsent-tweets-master-container'><UnsentTweets activeOptionHandler={setActiveOptionClicked} /></div></Modal>}
-                {showWhoCanReplyTippy && (
-                    <TippyAudience
-                        whoCanReply={whoCanReplyText}
-                        whoCanReplyHandler={setWhoCanReplyText}
-                        showTippy={setShowWhoCanReplyTippy}
-                    />
-                )}
-                {hasClicked &&
-                    <div onClick={() => {
-                        if (audience !== 'circle') setShowWhoCanReplyTippy(true)
-                    }}>
-                        <HomePostTextHelper
-                            disabled={audience === 'circle'}
-                            url={audience === 'circle' ? 'https://i.ibb.co/n7Gsfw7/lock-blue.png' : 'https://i.ibb.co/NnThJNG/earth-blue.png'}>
-                            {audience === 'circle' ? 'Only your Twitter Circle can reply' : whoCanReplyText}
-                        </HomePostTextHelper>
-                    </div>
+                    }
+                    <div id='home-post-right-bottom'>
+                        <div id='home-post-right-bottom-left'>
+                            {postIconsArray.map((iconUrl, idx) => {
+                                return <PostIcon handleFiles={handleFiles} key={idx} activeOptionHandler={setActiveOptionClicked} type={iconUrl[0]} url={iconUrl[1]} />
+                            })}
+                        </div>
 
-                }
-                <div id='home-post-right-bottom'>
-                    <div id='home-post-right-bottom-left'>
-                        {postIconsArray.map((iconUrl, idx) => {
-                            return <PostIcon key={idx} activeOptionHandler={setActiveOptionClicked} type={iconUrl[0]} url={iconUrl[1]} />
-                        })}
-                    </div>
-
-                    <div id='home-post-right-bottom-middle'>
-                        {/* <CircularProgress className='progress-circle' color={totalCount > 240 ? totalCount >= 280 ? 'error' : 'warning' : 'primary'} variant="determinate" size='30px' value={value} /> */}
-                        {value >= 250 && <span style={{ color: value > 240 ? value >= 280 ? 'red' : 'orange' : 'black', display: value > 250 ? 'inline' : 'none' }} id='word-limit'>{280 - value}</span>}
-                    </div>
-                    <div id='home-post-right-bottom-right'>
-                        {text.length > 0 &&
-                            <div
-                                className='addMoreTweetContainer'
-                                onClick={() => setShowTweetThread(true)}
-                            >
-                                <img
-                                    src='https://i.ibb.co/XFtv1G1/plus-Icon-blue.png' alt='addMoreTweetIcon' />
-                            </div>}
-                        <div style={{ marginLeft: '20px' }}><PrimaryButton isNotActive={text === ''} bgColor='1D98F0'>Tweet</PrimaryButton></div>
+                        <div id='home-post-right-bottom-middle'>
+                            {/* <CircularProgress className='progress-circle' color={totalCount > 240 ? totalCount >= 280 ? 'error' : 'warning' : 'primary'} variant="determinate" size='30px' value={value} /> */}
+                            {value >= 250 && <span style={{ color: value > 240 ? value >= 280 ? 'red' : 'orange' : 'black', display: value > 250 ? 'inline' : 'none' }} id='word-limit'>{280 - value}</span>}
+                        </div>
+                        <div id='home-post-right-bottom-right'>
+                            {text.length > 0 &&
+                                <div
+                                    className='addMoreTweetContainer'
+                                    onClick={() => setShowTweetThread(true)}
+                                >
+                                    <img
+                                        src='https://i.ibb.co/XFtv1G1/plus-Icon-blue.png' alt='addMoreTweetIcon' />
+                                </div>}
+                            <div style={{ marginLeft: '20px' }} onClick={
+                                () => {
+                                    setProgress(25);
+                                    tweetHandler();
+                                }
+                            }>
+                                <PrimaryButton isNotActive={text === ''} bgColor='1D98F0'>
+                                    Tweet
+                                </PrimaryButton>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
-        <Modal open={showTweetThread}><div className='tweetsThreadMasterContainer'><TweetsThread /></div></Modal>
+            </div>
+            <Modal open={showTweetThread}><div className='tweetsThreadMasterContainer'><TweetsThread setShowTweetThread={setShowTweetThread} /></div></Modal>
         </>
     )
 }

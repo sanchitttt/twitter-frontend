@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BACKEND_URL } from '../../../../config/config';
 import './styles.css';
 import Location from './Helper.js/Location';
 import Website from './Helper.js/Website';
 import Birthday from './Helper.js/Birthday';
 import DateJoined from './Helper.js/DateJoined';
 import ProfileBottom from './ProfileBottom';
+import { Modal } from '@mui/material';
+import EditProfile from './EditProfile';
 
 const textTransformation = (text) => {
   const textArr = text.split(' ');
@@ -44,10 +47,11 @@ Portfolio: http://bit.ly/3dg6rhD
 `
 function Profile() {
   const [profileData, setProfileData] = useState(initialState);
+  const [editProfileOpen, setEditProfileOpen] = useState(true);
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get('http://localhost:8082/pages/profile', { withCredentials: true });
+        const { data } = await axios.get(`${BACKEND_URL}/pages/profile`, { withCredentials: true });
         setProfileData(data);
       }
       catch (err) {
@@ -57,7 +61,7 @@ function Profile() {
     fetchUser();
   }, []);
   let transformedText = textTransformation(text)
-  const { accountHandle, accountName, bio, createdAt, followers, following, profileSrc, tweets, typeOfVerification, verified } = profileData;
+  const {website, location,accountHandle, accountName, bio, createdAt, followers, following, profileSrc, tweets, typeOfVerification, verified } = profileData;
   return (
     <div id='profile'>
 
@@ -80,7 +84,11 @@ function Profile() {
               <div id='profile-details-firstRow-profilePicture'>
                 <img src='https://pbs.twimg.com/profile_images/1555754123420913664/P0uQDM-b_400x400.jpg' alt='profilePicture' />
               </div>
-              <div id='profile-details-firstRow-editButton'>
+              <div id='profile-details-firstRow-editButton'
+                onClick={() => {
+                  setEditProfileOpen(true);
+                }}
+              >
                 Edit profile
               </div>
             </div>
@@ -96,7 +104,7 @@ function Profile() {
               {profileData.location && profileData.location.length && <Location location={'Ghaziabad'} />}
               {profileData.website && profileData.website.length && <Website url={'https://www.linkedin.com/in/sanchittewari/'} />}
               {profileData.dob && <Birthday birthday={'Born February 8, 2002'} />}
-              <DateJoined dateJoined={createdAt} /> 
+              <DateJoined dateJoined={createdAt} />
             </div>
             <div id='profile-details-lastRow'>
               <div id='profile-details-lastRow-left'>
@@ -115,7 +123,12 @@ function Profile() {
         </div>
         <ProfileBottom />
       </div>
+      <Modal open={editProfileOpen}>
+        <div id='editProfileMasterContainer'>
+          <EditProfile setEditProfileOpen={setEditProfileOpen} iAccountName={accountName} iBio={bio} iLocation={location}  iWebsite={website} />
+        </div>
 
+      </Modal>
 
     </div>
   )

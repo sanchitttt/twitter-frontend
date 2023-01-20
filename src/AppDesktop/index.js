@@ -17,15 +17,17 @@ import LogOutPage from './Pages/Logout';
 import NotLoggedIn from './Components/NotLoggedIn';
 import SuccessfullLogin from './Components/NotLoggedIn/SuccessfulLogin';
 import axios from 'axios';
+import { BACKEND_URL } from '../config/config';
+import ErrorBoundary from '../ErrorBoundary';
 
 function AppDesktop() {
   const [backgroundColorContext, setBackgroundColorContext] = useState('white');
   const [colorContext, setColorContext] = useState('#009BF0');
-
   return (
     <div id="AppDesktop">
-      <BackgroundContext.Provider value={{ backgroundValue: backgroundColorContext, backgroundHandler: setBackgroundColorContext }}>
-        <ColorContext.Provider value={{ colorValue: colorContext, colorHandler: setColorContext }}>
+     
+        <BackgroundContext.Provider value={{ backgroundValue: backgroundColorContext, backgroundHandler: setBackgroundColorContext }}>
+          <ColorContext.Provider value={{ colorValue: colorContext, colorHandler: setColorContext }}>
             <Routes>
               <Route path="/" element={<NotLoggedIn />} />
               <Route path='/login/success' element={<SuccessfullLogin />} />
@@ -43,8 +45,9 @@ function AppDesktop() {
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/bookmarks' element={<BookmarksPage />} />
             </Routes>
-        </ColorContext.Provider>
-      </BackgroundContext.Provider>
+          </ColorContext.Provider>
+        </BackgroundContext.Provider>
+    
     </div >
   );
 }

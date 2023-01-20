@@ -1,25 +1,49 @@
 import React from "react";
 import "./styles.css";
 
-export default function TippyAudience({whoCanReply, whoCanReplyHandler, showTippy }) {
-  console.log('im called')
+export default function TippyAudience({ setTweetsThreadWhoCanReply,whoCanReply, tweetThread, id, whoCanReplyHandler, showTippy }) {
   const everyoneHandler = () => {
-    whoCanReplyHandler("Everyone");
-    showTippy(false);
+    if(setTweetsThreadWhoCanReply){
+      setTweetsThreadWhoCanReply('Everyone')
+      whoCanReplyHandler("Everyone");
+      showTippy(false);
+    }
+    else{
+      whoCanReplyHandler("Everyone");
+      showTippy(false);
+    }
+    
   };
 
   const peopleFollowHandler = () => {
-    whoCanReplyHandler("People you follow");
-    showTippy(false);
+    if(setTweetsThreadWhoCanReply){
+      setTweetsThreadWhoCanReply('People you follow')
+      whoCanReplyHandler("People you follow");
+      showTippy(false);
+    }
+    else{
+      whoCanReplyHandler("People you follow");
+      showTippy(false);
+    }
+   
   };
 
   const onlyYouMentionHandler = () => {
-    whoCanReplyHandler("Only people you mention");
-    showTippy(false);
+    if(setTweetsThreadWhoCanReply){
+      setTweetsThreadWhoCanReply('Only people you mention')
+      whoCanReplyHandler("Only people you mention");
+      showTippy(false);
+    }
+    else{
+      whoCanReplyHandler("Only people you mention");
+      showTippy(false);
+    }
+   
+
   };
 
   return (
-    <div className="post-tippy" id='post-tippy'>
+    <div className="post-tippy" id={tweetThread ? id : 'post-tippy'}>
       <div className="post-tippy-text">Who can reply</div>
       <div className="post-tippy-light-text">
         Choose who can reply to this Tweet. <br />
@@ -28,7 +52,6 @@ export default function TippyAudience({whoCanReply, whoCanReplyHandler, showTipp
       <div className="post-tippyWidget-container">
         <div className="post-tippyWidget" onClick={everyoneHandler}>
           <div className="post-tippyWidget-left">
-            {" "}
             <div className="post-tippyWidget-img">
               <img
                 src="https://i.ibb.co/SP79Phq/earth-blue.png"
@@ -40,7 +63,7 @@ export default function TippyAudience({whoCanReply, whoCanReplyHandler, showTipp
             <div className="post-tippyWidget-text">Everyone</div>
           </div>
           <div className="post-tippyWidget-right">
-            {whoCanReply === "Everyone" && 
+            {whoCanReply === "Everyone" &&
               <img
                 src="https://i.ibb.co/Vqw2ggw/checkmark-blue.png"
                 width="20px"
@@ -64,7 +87,7 @@ export default function TippyAudience({whoCanReply, whoCanReplyHandler, showTipp
             <div className="post-tippyWidget-text">People you follow</div>
           </div>
           <div className="post-tippyWidget-right">
-            {whoCanReply === "People you follow" && 
+            {whoCanReply === "People you follow" &&
               <img
                 src="https://i.ibb.co/Vqw2ggw/checkmark-blue.png"
                 width="20px"
@@ -87,7 +110,7 @@ export default function TippyAudience({whoCanReply, whoCanReplyHandler, showTipp
             <div className="post-tippyWidget-text">Only people you mention</div>
           </div>
           <div className="post-tippyWidget-right">
-            {whoCanReply === "Only people you mention" && 
+            {whoCanReply === "Only people you mention" &&
               <img
                 src="https://i.ibb.co/Vqw2ggw/checkmark-blue.png"
                 width="20px"
