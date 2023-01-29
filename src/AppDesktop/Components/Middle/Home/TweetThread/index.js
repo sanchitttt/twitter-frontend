@@ -23,8 +23,8 @@ const tweets = [
   }
 ];
 
-export default function TweetsThread({ setShowTweetThread }) {
-  const [count, setCount] = useState(2);
+export default function TweetsThread({fromANormalTweet, setShowTweetThread }) {
+  const [count, setCount] = useState(fromANormalTweet?1:2);
   const [activeTweetInThread, setActiveTweetInThread] = useState(0);
   const [openConfirmDialogueBox, setOpenConfirmDialogueBox] = useState(false);
   const [tweetAllEnabled, setTweetAllEnabled] = useState(false);
@@ -55,6 +55,7 @@ export default function TweetsThread({ setShowTweetThread }) {
       arr.push(
         <HomePost2
           idx={i}
+          fromANormalTweet
           tweets={tweets}
           setTweetAllEnabled={setTweetAllEnabled}
           partOfAThread={true}
@@ -74,6 +75,7 @@ export default function TweetsThread({ setShowTweetThread }) {
       arr.push(
         <HomePost2
           idx={i}
+          fromANormalTweet
           tweets={tweets}
           setTweetAllEnabled={setTweetAllEnabled}
           partOfAThread={true}
@@ -96,6 +98,7 @@ export default function TweetsThread({ setShowTweetThread }) {
         <HomePost2
           idx={i}
           tweets={tweets}
+          fromANormalTweet
           partOfAThread={true}
           tweetAllEnabled={tweetAllEnabled}
           setProgress={setProgress}
@@ -116,6 +119,7 @@ export default function TweetsThread({ setShowTweetThread }) {
         <HomePost2
           idx={i}
           tweets={tweets}
+          fromANormalTweet
           setShowTweetThread={setShowTweetThread}
           tweetAllEnabled={tweetAllEnabled}
           setProgress={setProgress}

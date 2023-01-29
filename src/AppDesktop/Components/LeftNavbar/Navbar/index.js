@@ -13,6 +13,7 @@ import { createPortal } from 'react-dom';
 const navBar = [
     ['Home', { blackNonFilled: 'https://i.ibb.co/DrhfvL5/home-black-non-Filled.png', blackFilled: 'https://i.ibb.co/h7z1Ng3/home-black-filled.png', white: 'https://i.ibb.co/N9ZmzM0/home-white.png', whiteFilled: 'https://i.ibb.co/F5LSjNb/home-white-filled.png' }, '/home'],
     ['Explore', { blackNonFilled: 'https://i.ibb.co/YkDM6Lz/hashtag-black-non-Filled.png', blackFilled: 'https://i.ibb.co/T0CNL0J/hashtag-1.png', white: 'https://i.ibb.co/D80sjW9/hashtag-white-non-Filled.png', whiteFilled: 'https://i.ibb.co/NTY11Th/hashtag-white-filled.png' }, '/explore'],
+    ['Reels', { blackNonFilled: 'https://cdn-icons-png.flaticon.com/512/5948/5948543.png', blackFilled: 'https://cdn-icons-png.flaticon.com/512/7264/7264012.png' }, '/reels'],
     ['Notifications', { blackNonFilled: 'https://i.ibb.co/tZwMbRF/bell.png', blackFilled: 'https://i.ibb.co/Ns4qcPK/bell-ring.png', white: '' }, '/notifications'],
     ['Messages', { blackNonFilled: 'https://i.ibb.co/QrT16Lc/email-unfilled.png', blackFilled: 'https://i.ibb.co/k9mCxBF/email-filled.png', white: '' }, '/messages'],
     ['Bookmarks', { blackNonFilled: 'https://i.ibb.co/F3qqdcX/bookmark-black-non-Filled.png', blackFilled: 'https://i.ibb.co/wrjM6vy/bookmark-black-filled.png', white: '' }, '/bookmarks'],
@@ -26,20 +27,8 @@ function NavBar() {
     const { backgroundValue, backgroundHandler } = useContext(BackgroundContext);
     const { colorValue, colorHandler } = useContext(ColorContext);
     const [activeUrl, setActiveUrl] = useState('Home');
-    const [modal, setModal] = useState(false);
 
 
-    const openHandler = () => {
-        if (!modal) {
-
-            setModal(true);
-        }
-    };
-
-    const closeHandler = () => {
-        if (modal) setModal(false);
-    }
-    // console.log(isOpen)
     return (
         <div>
             <nav className='navbar-container'>
@@ -51,14 +40,8 @@ function NavBar() {
                         <NavButton navigateUrl={navItem[2]} setActiveUrl={setActiveUrl} key={idx} url={url} color={color}>{text}</NavButton>
                     )
                 })}
-                <div onClick={openHandler}>
-                    <TweetButton />
-                </div>
-                {modal &&
-                    <Modal open={modal} onClose={closeHandler}>
-                        <NewTweet closeHandler={closeHandler} />
-                    </Modal>
-                }
+
+                <TweetButton />
             </nav>
         </div>
     )

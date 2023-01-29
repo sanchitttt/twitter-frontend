@@ -67,10 +67,10 @@ export const AccountHandle = ({ children }) => {
   return <div className="post-accountHandle">@{children}</div>;
 };
 
-export const TimeStamp = ({ timestamp }) => {
+export const TimeStamp = ({forReel, timestamp }) => {
   // const currentDate = new Date();
   // const parsedDate = Date.parse(timestamp);
-  return <div className="post-timestamp-text">1hr</div>;
+  return <div style={{color:forReel && '#0f1419' , fontSize:forReel && '15px'}} className="post-timestamp-text">1hr</div>;
 };
 
 export const Pikaso = () => {

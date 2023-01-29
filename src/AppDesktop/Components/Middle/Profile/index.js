@@ -47,7 +47,7 @@ Portfolio: http://bit.ly/3dg6rhD
 `
 function Profile() {
   const [profileData, setProfileData] = useState(initialState);
-  const [editProfileOpen, setEditProfileOpen] = useState(true);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -82,7 +82,7 @@ function Profile() {
           <div id='profile-details-container'>
             <div id='profile-details-firstRow'>
               <div id='profile-details-firstRow-profilePicture'>
-                <img src='https://pbs.twimg.com/profile_images/1555754123420913664/P0uQDM-b_400x400.jpg' alt='profilePicture' />
+                <img src={profileSrc} alt='profilePicture' />
               </div>
               <div id='profile-details-firstRow-editButton'
                 onClick={() => {

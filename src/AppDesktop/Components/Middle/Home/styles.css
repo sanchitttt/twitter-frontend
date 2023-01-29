@@ -40,3 +40,11 @@
 #home-timeline{
     margin-top: 20px;
 }
+
+#homeStoriesContainer{
+    height: 216px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+}

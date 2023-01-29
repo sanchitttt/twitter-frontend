@@ -26,7 +26,7 @@ function ListsPage() {
   }, []);
   return (
     <div id='listsPage'>
-      <LeftSide />
+      {/* <LeftSide /> */}
       <Lists />
       <div id='lists-right'>
         <SearchBar />

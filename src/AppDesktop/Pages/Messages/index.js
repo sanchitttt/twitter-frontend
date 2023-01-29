@@ -26,7 +26,7 @@ function MessagesPage() {
   }, []);
   return (
     <div id='messagesPage'>
-      <LeftSide />
+      {/* <LeftSide /> */}
       <Messages />
       <NewMessage />
     </div>

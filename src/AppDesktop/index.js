@@ -19,21 +19,24 @@ import SuccessfullLogin from './Components/NotLoggedIn/SuccessfulLogin';
 import axios from 'axios';
 import { BACKEND_URL } from '../config/config';
 import ErrorBoundary from '../ErrorBoundary';
+import ReelsPage from './Pages/ReelsPage';
 
 function AppDesktop() {
   const [backgroundColorContext, setBackgroundColorContext] = useState('white');
   const [colorContext, setColorContext] = useState('#009BF0');
   return (
     <div id="AppDesktop">
-     
         <BackgroundContext.Provider value={{ backgroundValue: backgroundColorContext, backgroundHandler: setBackgroundColorContext }}>
           <ColorContext.Provider value={{ colorValue: colorContext, colorHandler: setColorContext }}>
+     
+            <LeftSide />
             <Routes>
               <Route path="/" element={<NotLoggedIn />} />
               <Route path='/login/success' element={<SuccessfullLogin />} />
               <Route path='/logout' element={<LogOutPage />} />
               <Route path='/home' element={<HomePage />} />
               <Route path='/explore' element={<ExplorePage />} />
+              <Route path='/reels' element={<ReelsPage />} />
               <Route path='/notifications' element={<NotificationsPage />} />
               <Route path='/messages'>
                 <Route path='' element={<MessagesPage />} />

@@ -3,6 +3,8 @@ import HomePost from './HomePost/index';
 import './styles.css';
 import Posts from '../PostsFeed/index';
 import TweetsPreferenceTippy from './Helper/Tippy';
+import Stories from './Stories';
+
 
 
 const postsArr = [
@@ -94,6 +96,9 @@ function Home() {
             />
             {showTippy && <div id='tweetPreferenceTippyRef'><TweetsPreferenceTippy type={typeOfTweets} typeHandler={setTypeOfTweets} /></div>}
           </div>
+        </div>
+        <div id='homeStoriesContainer'>
+            <Stories />
         </div>
         <HomePost />
         <div id='home-timeline'>

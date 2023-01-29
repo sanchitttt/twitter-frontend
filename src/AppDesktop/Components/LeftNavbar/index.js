@@ -9,8 +9,14 @@ import './styles.css';
 
 function LeftSide() {
   const navigate = useNavigate();
-  
+  const [showLeftNavBar, setShowLeftNavBar] = useState(true);
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === '/') if (showLeftNavBar) setShowLeftNavBar(false);
+  }, []);
+
   return (
+    showLeftNavBar &&
     <div id='leftSide'>
       <div id='leftTop'>
         <div className='twitter-bird-container'>
@@ -25,8 +31,6 @@ function LeftSide() {
       </div>
       <NavBarBottom />
     </div>
-
-
   )
 }
 

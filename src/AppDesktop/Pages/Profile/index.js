@@ -28,7 +28,7 @@ function ProfilePage() {
   }, []);
   return (
     <div id='profilePage'>
-      <LeftSide />
+      {/* <LeftSide /> */}
       <Profile />
       <div id='profilePage-right'>
         <SearchBar />

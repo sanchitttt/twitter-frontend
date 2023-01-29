@@ -28,7 +28,7 @@ function NotificationsPage() {
   }, []);
   return (
     <div id='notificationsPage'>
-      <LeftSide />
+      {/* <LeftSide /> */}
       <Notifications />
       <div id='notificationsPage-right'>
         <SearchBar />

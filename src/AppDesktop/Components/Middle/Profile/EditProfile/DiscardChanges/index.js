@@ -1,18 +1,18 @@
 import React from 'react';
 import './styles.css';
 
-function DiscardChangesBox({setEditProfileOpen, setShowDiscardChangesBox}) {
+function DiscardChangesBox({discardHeading,setKeepItOpened,discardSubText,setEditProfileOpen, setShowDiscardChangesBox}) {
     return (
         <div className='discardThreadContainer'>
             <div className='discardThreadContainerMainText'>
-                Discard changes?
+                {discardHeading?discardHeading:'Discard changes?'}
             </div>
             <div className='discardThreadContainerSubText'>
-                {"This can’t be undone and you’ll lose your changes."}
+            {discardSubText?discardSubText:'"This can’t be undone and you’ll lose your changes."'}
             </div>
             <div className='discardThreadContainerButtonsContainer'>
                 <div className='discardThreadContainerButtonDiscard'
-                onClick={() => setEditProfileOpen(false)}>
+                onClick={() => setKeepItOpened?setKeepItOpened(false):setEditProfileOpen(false)}>
                         Discard
                 </div>
                 <div className='discardThreadContainerButtonCancel'

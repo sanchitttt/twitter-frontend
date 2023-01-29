@@ -3,11 +3,6 @@ import ReactFileReader from 'react-file-reader';
 import './styles.css';
 
 function PostIcon({ url, homeEmojiThreadImageId, type, handleFiles, activeOptionHandler, partOfAThread }) {
-  const fileHandler = () => {
-    document.getElementById("imgupload").click();
-  }
-
-
   switch (type) {
     case 'file':
       return (
@@ -18,7 +13,7 @@ function PostIcon({ url, homeEmojiThreadImageId, type, handleFiles, activeOption
             multipleFiles={true}
             handleFiles={handleFiles}
           >
-            <img onClick={fileHandler} src={url} width='20px' height='20px' />
+            <img src={url} width='20px' height='20px' />
           </ReactFileReader>
         </div>
       )

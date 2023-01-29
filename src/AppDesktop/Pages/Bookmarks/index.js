@@ -26,7 +26,7 @@ function BookmarksPage() {
   }, []);
   return (
     <div id='bookmarksPage'>
-      <LeftSide />
+      {/* <LeftSide /> */}
       <div id='bookmarks-main'>
         <Bookmarks />
       </div>

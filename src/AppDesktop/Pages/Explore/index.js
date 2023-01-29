@@ -26,7 +26,7 @@ function ExplorePage() {
   }, []);
   return (
     <div id='explorePage'>
-      <LeftSide />
+      {/* <LeftSide /> */}
       <div><Explore /></div>
       <div id='explorePageRight'><WhoToFollow /></div>
     </div>
