@@ -8,7 +8,7 @@ import ScheduleTweet from '../../../Helper/ScheduleTweet/index';
 import UnsentTweets from '../../../Helper/UnsentTweets/index';
 import TippyAudience from '../../../Helper/TippyAudience/index';
 import HomePoll from '../../../Helper/HomePoll/index';
-import { LinearProgress, Modal } from '@mui/material';
+import { CircularProgress, LinearProgress, Modal, TextField } from '@mui/material';
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import TweetsThread from '../TweetThread';
@@ -33,6 +33,21 @@ const style = {
     justifyContent: 'center',
     alignItems: 'center'
 }
+
+const monthsArr = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
 
 function HomePost({ forTimeline }) {
     const [text, setText] = useState("");
@@ -77,20 +92,48 @@ function HomePost({ forTimeline }) {
         let id;
         const fetch = async () => {
             try {
+                let now;
+                let scheduledDate;
+                if (isAScheduledTweet.bool) {
+                    const { amPm, date, hour, minute, month, year } = isAScheduledTweet;
+                    let monthIndex;
+                    for (let i = 0; i < monthsArr.length; i++) if (monthsArr[i] === month) {
+                        monthIndex = i;
+                        break;
+                    }
+                    scheduledDate = new Date(year, monthIndex, date, amPm === "AM" ? hour : hour + 12, minute);
+                }
+                if (pollDate.changed) {
+                    now = new Date();
+                    if (pollDate.hours) now.setHours(now.getHours() + pollDate.hours);
+                    if (pollDate.days) now.setDate(now.getDate() + pollDate.days);
+                    if (pollDate.minutes) now.setMinutes(now.getMinutes() + pollDate.minutes);
+                    console.log(now);
+                }
+
+
                 let obj = {
                     tweetText: text,
-                    poll: { expiresAt: pollDate, options: pollOptions },
+                    poll: { expiresAt: now, options: pollOptions },
+                    scheduledDate: scheduledDate ? scheduledDate : null,
                     audience: audience,
                     whoCanReply: whoCanReplyText,
                     attachments: imageList
                 }
+
                 const result = await axios.post(`${BACKEND_URL}/tweet/new/tweet`, obj, { withCredentials: true });
                 if (result) {
                     id = setTimeout(() => {
                         setProgress(100);
                         setTimeout(() => {
                             setProgress(0);
-                        },500)
+                            setText('');
+                            setIsAScheduledTweet({ changed: false, hours: null, minutes: null, days: null })
+                            setImageList([]);
+                            setWhoCanReplyText('Everyone');
+                            setAudience('everyone');
+                            setActiveOptionClicked(null);
+                        }, 500)
                     }, 2000);
                 }
             } catch (error) {
@@ -99,6 +142,7 @@ function HomePost({ forTimeline }) {
         }
         if (tweetEnabled) {
             fetch();
+
             return () => {
                 clearTimeout(id);
             }
@@ -128,8 +172,9 @@ function HomePost({ forTimeline }) {
     }
 
     const textHandler = (e) => {
-        setText(e.target.value);
-        setValue(Math.ceil((myRef.current.value.length / 280) * 100))
+        if (e.target.value.length <= 280) setText(e.target.value);
+        if (e.target.value.length >= 280) setValue(100);
+        else setValue(Math.ceil((e.target.value.length / 280) * 100));
         let rows = Math.ceil(totalCount / rowThreshold);
         document.getElementById('home-post-input').rows = rows;
     }
@@ -179,7 +224,7 @@ function HomePost({ forTimeline }) {
     }, []);
 
     return (
-        <>
+        <div style={{marginTop:'15px'}}>
             {progress > 0 && <div>
                 <LinearProgress
                     aria-describedby="progress-bar"
@@ -228,7 +273,28 @@ function HomePost({ forTimeline }) {
                     }
 
                     {hasClicked && <HomeCheckbox audience={audience} audienceHandler={setAudience} />}
-                    <textarea style={{ color: 'black' }} placeholder={activeOptionClicked === 'poll' ? "Ask a question" : "What's happening?"} ref={myRef} id='home-post-input' rows='1' cols={textAreaCols} onFocus={focusHandler} value={text} onKeyDown={keyDownHandler} onChange={textHandler} />
+                    <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                        <TextField
+                            ref={myRef}
+                            id='home-post-input'
+                            fullWidth
+                            value={text}
+                            onKeyDown={keyDownHandler}
+                            onChange={textHandler}
+                            onFocus={focusHandler}
+                            multiline={true}
+                            placeholder={activeOptionClicked === 'poll' ? "Ask a question" : "What's happening?"}
+                            sx={{
+
+                                border: 'none',
+                                fontFamily: 'Poppins',
+                                textAlign: 'center',
+                                color: 'black'
+                            }}
+                        />
+                    </div>
+
+                    {/* <textarea style={{ color: 'black' }} placeholder={activeOptionClicked === 'poll' ? "Ask a question" : "What's happening?"} ref={myRef} id='home-post-input' rows='1' cols={textAreaCols} onFocus={focusHandler} value={text} onKeyDown={keyDownHandler} onChange={textHandler} /> */}
                     <div style={{ maxWidth: '500px', maxHeight: '500px' }}><ImagePreview imageList={imageList} /></div>
                     {activeOptionClicked === 'poll' && <HomePoll pollOptions={pollOptions} pollDate={pollDate} setPollOptions={setPollOptions} setPollDate={setPollDate} activeOptionHandler={setActiveOptionClicked} />}
                     {activeOptionClicked === 'emoji' && <div id='emoji-picker-normal' style={{ width: '356px' }}>
@@ -267,8 +333,8 @@ function HomePost({ forTimeline }) {
                         </div>
 
                         <div id='home-post-right-bottom-middle'>
-                            {/* <CircularProgress className='progress-circle' color={totalCount > 240 ? totalCount >= 280 ? 'error' : 'warning' : 'primary'} variant="determinate" size='30px' value={value} /> */}
-                            {value >= 250 && <span style={{ color: value > 240 ? value >= 280 ? 'red' : 'orange' : 'black', display: value > 250 ? 'inline' : 'none' }} id='word-limit'>{280 - value}</span>}
+                            <CircularProgress className='progress-circle' color={text.length > 240 ? text.length >= 280 ? 'error' : 'warning' : 'primary'} variant="determinate" size='20px' value={value} />
+                            {text.length >= 250 && <span style={{ color: text.length > 240 ? text.length >= 280 ? 'red' : 'orange' : 'black', display: text.length > 250 ? 'inline' : 'none' }} id='word-limit'>{280 - text.length}</span>}
                         </div>
                         <div id='home-post-right-bottom-right'>
                             {text.length > 0 &&
@@ -295,7 +361,7 @@ function HomePost({ forTimeline }) {
 
             </div>
             <Modal open={showTweetThread}><div className='tweetsThreadMasterContainer'><TweetsThread setShowTweetThread={setShowTweetThread} /></div></Modal>
-        </>
+        </div>
     )
 }
 

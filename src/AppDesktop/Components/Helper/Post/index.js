@@ -12,6 +12,7 @@ import {
 
 const Post = ({
   idx,
+  id,
   profileSrc,
   accountName,
   accountHandle,
@@ -26,14 +27,16 @@ const Post = ({
   retweets,
   likes,
   attachments,
-  relation
+  relation,
+  likedAlready,
+  retweetedAlready
 
 }) => {
 
   return (
     <>
-    {/* <div className='custom-card'> */}
-    <div className="post-card-container">
+      {/* <div className='custom-card'> */}
+      <div className="post-card-container">
         <div className="postCard-leftSide-container">
           <img
             src={profileSrc}
@@ -43,7 +46,7 @@ const Post = ({
         </div>
         <div className="postCard-rightSide-container">
           <PostWhoLikedOrCommented type="replied">
-            {relation==='retweet' ? 'You retweeted':'Somebody liked your post'}
+            {relation === 'retweet' ? 'You retweeted' : 'Somebody liked your post'}
           </PostWhoLikedOrCommented>
           <AccountDetailsAndScreenshotAndMore
             accountName={accountName}
@@ -55,8 +58,11 @@ const Post = ({
           <TweetPostText>{tweetText}</TweetPostText>
           <TweetAttachments data={attachments} />
           <TaggedHandles data={taggedHandles} />
-         
+
           <PostStats
+            id={id}
+            likedAlready={likedAlready}
+            retweetedAlready={likedAlready}
             views={views}
             replies={replies}
             retweets={retweets}
@@ -65,8 +71,8 @@ const Post = ({
           />
         </div>
       </div>
-    {/* </div> */}
-      
+      {/* </div> */}
+
     </>
   );
 };

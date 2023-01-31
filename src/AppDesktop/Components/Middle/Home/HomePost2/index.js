@@ -8,7 +8,7 @@ import ScheduleTweet from '../../../Helper/ScheduleTweet/index';
 import UnsentTweets from '../../../Helper/UnsentTweets/index';
 import TippyAudience from '../../../Helper/TippyAudience/index';
 import HomePoll from '../../../Helper/HomePoll/index';
-import { Dialog, LinearProgress, Modal } from '@mui/material';
+import { CircularProgress, Dialog, LinearProgress, Modal, TextField } from '@mui/material';
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import axios from 'axios';
@@ -151,7 +151,9 @@ function HomePost2({
   };
   const textHandler = (e) => {
     tweets[idx].tweetText = e.target.value;
-    setText(e.target.value);
+    if (e.target.value.length <= 280) setText(e.target.value);
+    if (e.target.value.length >= 280) setValue(100);
+    else setValue(Math.ceil((e.target.value.length / 280) * 100));
     const input1 = document.getElementById('homePostInput1').value;
     if (e.target.value.length === 0) {
       if (tweetAllEnabled) setTweetAllEnabled(false);
@@ -288,7 +290,33 @@ function HomePost2({
             </div>
           </div>
         )}
-        <textarea
+        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          <TextField
+            ref={myRef}
+            id={homePostInputId}
+            fullWidth
+            value={text}
+            onKeyDown={keyDownHandler}
+            onChange={textHandler}
+            onFocus={focusHandler}
+            multiline={true}
+            placeholder={
+              !firstItemInThread
+                ? ""
+                : activeOptionClicked === "poll"
+                  ? "Ask a question"
+                  : "What's happening?"
+            }
+            sx={{
+
+              border: 'none',
+              fontFamily: 'Poppins',
+              textAlign: 'center',
+              color: 'black'
+            }}
+          />
+        </div>
+        {/* <textarea
           style={{ color: "black" }}
           placeholder={
             !firstItemInThread
@@ -305,7 +333,7 @@ function HomePost2({
           value={text}
           onKeyDown={keyDownHandler}
           onChange={textHandler}
-        />
+        /> */}
         <div style={{ maxWidth: '500px', maxHeight: '500px' }}><ImagePreview imageList={imageList} /></div>
         {activeOptionClicked === "poll" && (
           <HomePoll pollOptions={pollOptions} pollDate={pollDate} setPollOptions={setPollOptions} setPollDate={setPollDate} activeOptionHandler={setActiveOptionClicked} />
@@ -393,19 +421,8 @@ function HomePost2({
           </div>
 
           <div id="home-post-right-bottom-middle">
-            {/* <CircularProgress className='progress-circle' color={totalCount > 240 ? totalCount >= 280 ? 'error' : 'warning' : 'primary'} variant="determinate" size='30px' value={value} /> */}
-            {value >= 250 && (
-              <span
-                style={{
-                  color:
-                    value > 240 ? (value >= 280 ? "red" : "orange") : "black",
-                  display: value > 250 ? "inline" : "none"
-                }}
-                id="word-limit"
-              >
-                {280 - value}
-              </span>
-            )}
+            <CircularProgress className='progress-circle' color={text.length > 240 ? text.length >= 280 ? 'error' : 'warning' : 'primary'} variant="determinate" size='20px' value={value} />
+            {text.length >= 250 && <span style={{ color: text.length > 240 ? text.length >= 280 ? 'red' : 'orange' : 'black', display: text.length > 250 ? 'inline' : 'none' }} id='word-limit'>{280 - text.length}</span>}
           </div>
           <div id="home-post-right-bottom-right">
             {showAddMoreButton && text.length > 0 && (

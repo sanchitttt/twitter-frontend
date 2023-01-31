@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { BACKEND_URL } from "../../../../../config/config";
 import './styles.css';
 
 export const PostWhoLikedOrCommented = ({ children, type }) => {
@@ -67,10 +69,10 @@ export const AccountHandle = ({ children }) => {
   return <div className="post-accountHandle">@{children}</div>;
 };
 
-export const TimeStamp = ({forReel, timestamp }) => {
+export const TimeStamp = ({ forReel, timestamp }) => {
   // const currentDate = new Date();
   // const parsedDate = Date.parse(timestamp);
-  return <div style={{color:forReel && '#0f1419' , fontSize:forReel && '15px'}} className="post-timestamp-text">1hr</div>;
+  return <div style={{ color: forReel && '#0f1419', fontSize: forReel && '15px' }} className="post-timestamp-text">1hr</div>;
 };
 
 export const Pikaso = () => {
@@ -154,7 +156,7 @@ export const MoreOptions = () => {
 };
 
 export const DotSeperator = () => {
-  return <div style={{ fontSize: "15px", color: "grey", marginLeft:'2px' ,marginRight:'2px' }}>·</div>;
+  return <div style={{ fontSize: "15px", color: "grey", marginLeft: '2px', marginRight: '2px' }}>·</div>;
 };
 
 export const TweetPostText = ({ children }) => {
@@ -237,25 +239,64 @@ export function HomePostTextHelper({ url, children }) {
 }
 
 export const TweetAttachments = ({ data }) => {
-  if (!data.length) {
-    return null;
-  }
   if (data.length === 1) {
     return (
-      <div className="tweet-attachments-single-attachment">
-        <img src={data[0]} alt="post_image" />
+      <div className="imgListContainer1">
+        <img src={data[0]} alt="icon" />
       </div>
     );
   }
   if (data.length === 2) {
-    return null;
+    return (
+      <div className="imgListContainer2">
+        <div className="imgListContainer2Left">
+          <img src={data[0]} alt="icon" />
+        </div>
+        <div className="imgListContainer2Right">
+          <img src={data[1]} alt="icon" />
+        </div>
+      </div>
+    );
   }
   if (data.length === 3) {
-    return null;
+    return (
+      <div className="imgListContainer3">
+        <div className="imgListContainer3Left">
+          <img src={data[0]} alt="icon" />
+        </div>
+        <div className="imgListContainer3RightContainer">
+          <div className="imgListContainer3RightLeft">
+            <img src={data[1]} alt="icon" />
+          </div>
+          <div className="imgListContainer3RightRight">
+            <img src={data[2]} alt="icon" />
+          </div>
+        </div>
+      </div>
+    );
   }
   if (data.length === 4) {
-    return null;
+    return (
+      <div className="imgListContainer4">
+        <div className="imgListContainer4Top">
+          <img src={data[0]} alt="icon" />
+          <img src={data[1]} alt="icon" />
+        </div>
+        <div className="imgListContainer4Bottom">
+          <img src={data[2]} alt="icon" />
+          <img src={data[3]} alt="icon" />
+
+        </div>
+      </div>
+    );
   }
+  return (
+    <div>
+      {data.map((img, idx) => {
+        return <img key={idx} src={img} alt="icon" />;
+      })}
+    </div>
+  );
 };
 
 export const AccountDetailsAndScreenshotAndMore = ({
@@ -282,7 +323,15 @@ export const AccountDetailsAndScreenshotAndMore = ({
   );
 };
 
-export const PostStat = ({ type, name, urlHovered, urlGrey }) => {
+export const PostStat = ({ likedAlready, id, urlFilled, type, name, urlHovered, urlGrey }) => {
+  let tweetLiked;
+  useEffect(() => {
+    // const fetch = async () => {
+    //   let result = await axios.get(`${BACKEND_URL}/posts/`)
+    // }
+    // fetch();
+  }, [])
+
   const [statHovered, setStatHovered] = useState(false);
 
   const viewsMouseOverHandler = () => {
@@ -293,7 +342,7 @@ export const PostStat = ({ type, name, urlHovered, urlGrey }) => {
   };
   let backgroundColor;
   let color;
-  if (type === "view" || type === "reply" || type==='share') {
+  if (type === "view" || type === "reply" || type === 'share') {
     backgroundColor = "#1a8cd81a";
     color = "#1D9BF0";
   } else if (type === "retweet") {
@@ -304,6 +353,16 @@ export const PostStat = ({ type, name, urlHovered, urlGrey }) => {
     color = "#fc288a";
   }
 
+  const clickHandler = () => {
+    if (type === 'like') {
+      const fetch = async () => {
+        const result = await axios.post(`${BACKEND_URL}/post/stats/like/toggle`, { id: id }, { withCredentials: true });
+        if (likedAlready) likedAlready = false;
+        else likedAlready = true;
+      }
+      fetch();
+    }
+  }
   return (
     <div
       className="post-stat"
@@ -314,8 +373,10 @@ export const PostStat = ({ type, name, urlHovered, urlGrey }) => {
         className="post-stat-img-container"
         style={{
           backgroundColor: statHovered && backgroundColor,
-          borderRadius: "999px"
+          borderRadius: "999px",
+          transition: '0.2s'
         }}
+        onClick={clickHandler}
       >
         {statHovered ? (
           <img
@@ -323,19 +384,20 @@ export const PostStat = ({ type, name, urlHovered, urlGrey }) => {
             width="18.75px"
             height="18.75px"
             alt="post-stat"
+            style={{ transition: '0.2s' }}
           />
         ) : (
-          <img src={urlGrey} width="18.75px" height="18.75px" alt="post-stat" />
+          <img src={likedAlready ? urlFilled : urlGrey} style={{ transition: '0.2s' }} width="18.75px" height="18.75px" alt="post-stat" />
         )}
       </div>
-      <div className="post-stat-text" style={{ color: statHovered && color }}>
+      <div className="post-stat-text" style={{ color: (statHovered || likedAlready) && color }}>
         {name}
       </div>
     </div>
   );
 };
 
-export const PostStats = ({ views, replies, retweets, likes ,share}) => {
+export const PostStats = ({ id, likedAlready, retweetedAlready, views, replies, retweets, likes, share }) => {
   return (
     <div className="post-stats">
       <PostStat
@@ -357,12 +419,15 @@ export const PostStats = ({ views, replies, retweets, likes ,share}) => {
         name={retweets}
       />
       <PostStat
+        id={id}
+        likedAlready={likedAlready}
+        urlFilled={'https://i.ibb.co/L9m8FCt/heart-2.png'}
         type="like"
         urlHovered={"https://i.ibb.co/2KkyVfp/heart-2.png"}
         urlGrey={"https://i.ibb.co/qmB8Cp0/heart-1.png"}
         name={likes}
       />
-       <PostStat
+      <PostStat
         type="share"
         urlHovered={"https://i.ibb.co/64yk2H3/upload-blue.png"}
         urlGrey={"https://i.ibb.co/8X0jQKm/upload-grey.png"}

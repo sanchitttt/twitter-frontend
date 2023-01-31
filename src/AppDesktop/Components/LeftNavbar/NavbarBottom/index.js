@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import AccountDetailsContext from '../../../Contexts/AccountDetailsContext';
 import DarkText from '../Helper/DarkText';
 import LightText from '../Helper/LightText';
 import UserTippy from '../Helper/UserTippy';
@@ -6,6 +7,8 @@ import './styles.css';
 
 function NavBarBottom() {
     const [showTippy, setShowTippy] = useState(false);
+    const details = useContext(AccountDetailsContext);
+    console.log(details)
     const toggler = () => {
         if (showTippy) setShowTippy(false);
         else setShowTippy(true);

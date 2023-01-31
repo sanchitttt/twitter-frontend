@@ -9,7 +9,7 @@ import Stories from './Stories';
 
 const postsArr = [
   {
-    id: "23-9o2-302-302",
+    _id: "23-9o2-302-302",
     profileSrc: "https://i.ibb.co/hFgzVsH/1655230024525.jpg",
     accountName: "marKE9150",
     accountHandle: "lasertoch",
@@ -25,7 +25,9 @@ const postsArr = [
     likes: 1,
     attachments: [
       "https://i.ibb.co/BnmScDN/pragya-T-cottage-in-rainy-mountainhyper-realistic-4k-fecd39d4-8c45-4e47-8b27-108569a98a92.png"
-    ]
+    ],
+    likedAlready:true,
+    retweetedAlready:false
   },
   // {
   //   id: "23-9o2-302-301",

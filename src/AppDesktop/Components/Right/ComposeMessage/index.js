@@ -13,7 +13,7 @@ function ComposeMessage() {
     const myRef = useRef(null);
 
     return (
-        <div id='compose-message'>
+        <div id='compose-message' onClick={() => console.log('im clicked')}>
             <div id='compose-message-heading'>
                 <div id='compose-message-heading-image'>
                     <img src='https://i.postimg.cc/L4Y528fg/wrong-black.png' alt='closeIcon' />

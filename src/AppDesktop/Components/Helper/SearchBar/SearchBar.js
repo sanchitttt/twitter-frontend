@@ -1,8 +1,13 @@
 import "./styles.css";
 import React, { useEffect, useRef, useState } from "react";
+import { BACKEND_URL } from '../../../../config/config';
+import axios from 'axios';
+
 
 const SearchItem = () => {
-  return null;
+  return <div>
+    hi
+  </div>
 };
 const SearchItems = ({ items }) => {
   return (
@@ -25,6 +30,28 @@ export default function SearchBar() {
   const [text, setText] = useState("");
   const [items, setItems] = useState([]);
 
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        let result = await axios.get(`${BACKEND_URL}/other/searchBar`, {
+          withCredentials: true, params: {
+            text: text
+          }
+        });
+        console.log(result.data)
+        setItems(result.data);
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
+    let timeoutId = setTimeout(() => {
+      fetch();
+    }, 750)
+
+    return () => {
+      clearTimeout(timeoutId);
+    }
+  }, [text]);
   const clickHandler = () => {
     setIsHovered(true);
     myRef.current.focus();
@@ -85,7 +112,7 @@ export default function SearchBar() {
         </div>
         {/* <div className="rightSide-searchBar"> */}
         <input
-        style={{fontFamily:'Poppins'}}
+          style={{ fontFamily: 'Poppins' }}
           type="text"
           placeholder="Search Twitter"
           id="rightSideSearchBarInput"

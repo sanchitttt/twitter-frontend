@@ -7,7 +7,8 @@ const links = [
     'Tweets',
     'Tweets & replies',
     'Media',
-    'Likes'
+    'Likes',
+    'Reels'
 ]
 
 const postsArr = [

@@ -20,15 +20,32 @@ import axios from 'axios';
 import { BACKEND_URL } from '../config/config';
 import ErrorBoundary from '../ErrorBoundary';
 import ReelsPage from './Pages/ReelsPage';
+import AccountDetailsContext from './Contexts/AccountDetailsContext';
 
+let accountDetails;
 function AppDesktop() {
   const [backgroundColorContext, setBackgroundColorContext] = useState('white');
   const [colorContext, setColorContext] = useState('#009BF0');
+
+
+  useEffect(() => {
+    const fetchAccountDetails = async () => {
+      try {
+        let result = await axios.get(`${BACKEND_URL}/other/getAccountDetails`, { withCredentials: true })
+        accountDetails = result.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAccountDetails();
+  }, []);
+
+  // console.log(accountDetails)
   return (
     <div id="AppDesktop">
-        <BackgroundContext.Provider value={{ backgroundValue: backgroundColorContext, backgroundHandler: setBackgroundColorContext }}>
-          <ColorContext.Provider value={{ colorValue: colorContext, colorHandler: setColorContext }}>
-     
+      <BackgroundContext.Provider value={{ backgroundValue: backgroundColorContext, backgroundHandler: setBackgroundColorContext }}>
+        <ColorContext.Provider value={{ colorValue: colorContext, colorHandler: setColorContext }}>
+          <AccountDetailsContext.Provider value={{ ...accountDetails }}>
             <LeftSide />
             <Routes>
               <Route path="/" element={<NotLoggedIn />} />
@@ -48,9 +65,10 @@ function AppDesktop() {
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/bookmarks' element={<BookmarksPage />} />
             </Routes>
-          </ColorContext.Provider>
-        </BackgroundContext.Provider>
-    
+          </AccountDetailsContext.Provider>
+        </ColorContext.Provider>
+      </BackgroundContext.Provider>
+
     </div >
   );
 }

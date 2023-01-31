@@ -9,7 +9,7 @@ function ReelItem({ profileSrc, accountName, accountHandle, reelSrc }) {
     const videoRef = useRef(null);
 
     const toggleMute = () => {
-        if(isMute) setIsMute(false)
+        if (isMute) setIsMute(false)
         else setIsMute(true);
     }
     const togglePlay = () => {
@@ -107,6 +107,14 @@ function ReelItem({ profileSrc, accountName, accountHandle, reelSrc }) {
                 <div style={{ display: 'flex' }}>
                     <div>
                         <PostStat
+                            type="view"
+                            urlHovered={"https://i.ibb.co/SNJkZ73/views-blue.png"}
+                            urlGrey={"https://i.ibb.co/JcZ4Fvh/views-grey.png"}
+                            name={0}
+                        />
+                    </div>
+                    <div>
+                        <PostStat
                             type="like"
                             urlHovered={"https://i.ibb.co/2KkyVfp/heart-2.png"}
                             urlGrey={"https://i.ibb.co/qmB8Cp0/heart-1.png"}
@@ -121,6 +129,7 @@ function ReelItem({ profileSrc, accountName, accountHandle, reelSrc }) {
                             name={0}
                         />
                     </div>
+
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                     <div className='greyHover' style={{ width: '34px', height: '34px' }}>

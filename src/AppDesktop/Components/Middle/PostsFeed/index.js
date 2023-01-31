@@ -10,7 +10,8 @@ const Posts = ({ postsArr,relation }) => {
           return (
             <Post
               idx={idx}
-              key={post.id}
+              key={post._id}
+              id = {post._id}
               profileSrc={post.profileSrc}
               accountName={post.accountName}
               accountHandle={post.accountHandle}
@@ -26,6 +27,8 @@ const Posts = ({ postsArr,relation }) => {
               likes={post.likes}
               attachments={post.attachments}
               relation = {relation}
+              likedAlready={post.likedAlready}
+              retweetedAlready={post.retweetedAlready}
             />
           );
         })}
