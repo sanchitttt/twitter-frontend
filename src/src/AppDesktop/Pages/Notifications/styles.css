@@ -1,0 +1,12 @@
+#notificationsPage{
+    display: flex;
+    width: 990px;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+#notificationsPage-right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

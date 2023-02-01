@@ -1,0 +1,38 @@
+#notLoggedInBottomMContainer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 65px;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #eff3f4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loginMButton {
+    font-family: 'Poppins';
+    color: rgb(29, 155, 240);
+    border-radius: 999px;
+    width: 45%;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eff3f4;
+    margin-left: 7.5px;
+}
+
+.signupMButton {
+    font-family: 'Poppins';
+    background-color: rgb(29, 155, 240);
+    color: white;
+    border-radius: 999px;
+    width: 45%;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 7.5px;
+}

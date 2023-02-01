@@ -1,0 +1,51 @@
+#dropDown-container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.dropDown-heading-text{
+    color: #0f1419;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Poppins';
+    margin-left: 15px;
+}
+.dropDown-heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropDown-heading-imgContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+
+.dropDown-itemContainer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.dropDown-item-imgContainer{
+    margin-right: 15px;
+    margin-left: 15px;
+    
+}
+
+.dropDown-item-text{
+    font-size: 15px;
+    color:#0f1419;
+    font-family: 'Poppins';
+}
+
+.blackHover{
+    padding:10px 0px;
+}
+.blackHover:hover{
+    background: rgba(15, 20, 25, 0.1);
+}

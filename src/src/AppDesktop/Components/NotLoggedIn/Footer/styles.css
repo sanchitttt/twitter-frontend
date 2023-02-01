@@ -1,0 +1,146 @@
+.notLoggedIn-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(29, 155, 240);
+    display: flex;
+    height: 72px;
+    justify-content: center;
+    align-items: center;
+}
+
+.poppins {
+    font-family: 'Poppins';
+}
+
+
+.notLoggedIn-footer-leftText-big {
+    font-weight: bold;
+    font-size: 23px;
+}
+
+.notLoggedIn-footer-leftText-small {
+    font-size: 15px;
+}
+
+.notLoggedIn-footer-items-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+.notLoggedIn-footer-leftText {
+    display: flex;
+    flex-direction: column;
+    color: #ffff;
+}
+
+.notLoggedIn-footer-btnContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+
+.login-btn {
+    font-weight: bold;
+    font-family: 'Poppins';
+    color: #fff;
+    border-radius: 999px;
+    width: 86px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eff3f4;
+    margin: 0px 10px;
+}
+
+.signup-btn {
+    font-family: 'Poppins';
+    font-weight: bold;
+    background-color: #fff;
+    color: black;
+    border-radius: 999px;
+    width: 86px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width:1100px) {
+
+    .notLoggedIn-footer-leftText-big {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .notLoggedIn-footer-leftText-small {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width:997px) {
+
+    .notLoggedIn-footer-leftText-big {
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    
+    .notLoggedIn-footer-leftText-small {
+        font-size: 12px;
+    }
+    .login-btn {
+        width: 75px;
+        font-size: 15px;
+    }
+    
+    .signup-btn {
+        width: 75px;
+        font-size: 15px;
+    }
+    
+}
+
+
+@media screen and (max-width:844px) {
+    .notLoggedIn-footer-leftText {
+        
+        display: none;
+    }
+    .login-btn {
+        width: 90% !important;
+        font-size: 15px;
+    }
+    
+    .signup-btn {
+        width: 90% !important;
+        font-size: 15px;
+    }
+    .w50{
+        width: 50%;
+    }
+    .notLoggedIn-footer-btnContainer {
+        width: 100%;
+    }
+    .notLoggedIn-footer-items-container{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+    .login-btn {
+        width: 231px;
+        font-size: 15px;
+    }
+    
+    .signup-btn {
+        width: 231px;
+        font-size: 15px;
+    }
+   
+}

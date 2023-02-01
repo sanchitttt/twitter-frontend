@@ -1,0 +1,155 @@
+#home-post-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+#home-post-left {
+    display: flex;
+    flex-direction: column;
+    width: 48px;
+    margin-top: 10px;
+    margin-right: 10px;
+    flex-grow: 0;
+    margin-left: 10px;
+}
+
+.rounded-image {
+    border-radius: 9999px;
+}
+
+#home-post-left-top {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
+
+#home-post-right {
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    justify-content: center;
+    margin-top: 10px;
+    flex-grow: 6;
+    margin-right: 10px;
+}
+
+#home-post-right textarea {
+    background: transparent;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    color: #536471;
+    margin: 10px 0px;
+    font-family: 'Poppins';
+
+}
+
+#home-post-right textarea::-webkit-scrollbar {
+    display: none;
+}
+
+#home-post-right-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+
+
+#word-limit {
+    position: absolute;
+    top: 50;
+    left: 50;
+}
+
+.progress-circle {
+    position: relative;
+}
+
+#home-post-right-bottom-left {
+    display: flex;
+
+}
+
+#home-post-right-bottom-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#word-limit {
+    font-size: 10px;
+}
+
+.home-schedule-text-hover {
+    transition: 0.25s;
+}
+
+.home-schedule-text-hover:hover {
+    text-decoration: underline;
+}
+
+#home-post-modal-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#home-post-right-bottom-right {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.addMoreTweetContainer {
+    width: 22.4px;
+    height: 22.4px;
+    border-radius: 999px;
+    border: 1px solid #eff3f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homePostCloseIconContainer {
+    /* top: 15px; */
+    /* position: absolute; */
+    /* right: 20px; */
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: grey; */
+    border-radius: 999px;
+}
+
+.tweetsThreadMasterContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.homePostCloseIconContainer img {
+    width: 9px;
+    height: 9px;
+}
+
+.homePostCloseIconContainer:hover {
+    background-color: rgb(29, 155, 240, 0.1);
+}
+
+.addMoreTweetContainer img {
+    width: 13px;
+    height: 13px;
+}
+
+.addMoreTweetContainer:hover {
+    cursor: pointer;
+}

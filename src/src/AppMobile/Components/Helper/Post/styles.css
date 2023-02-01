@@ -1,0 +1,19 @@
+.post-card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.postCard-leftSide-container {
+    margin-top: 25px;
+    margin-right: 20px;
+}
+
+.postCard-rightSide-container {
+    flex-grow: 15;
+}
+
+.postCard-rightSide-container {
+    display: flex;
+    flex-direction: column;
+}

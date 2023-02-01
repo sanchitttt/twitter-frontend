@@ -1,0 +1,87 @@
+.row-flexbox {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .column-flexbox {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .black-text {
+    color: "#0F1419";
+  }
+  
+  .large-text {
+    font-size: 20px;
+  }
+  
+  .ai-center {
+    align-items: center;
+  }
+  
+  .mt-10 {
+    margin-top: 10px;
+  }
+  
+  .mt-25 {
+    margin-top: 25px;
+  }
+  
+  .t-al-c {
+    text-align: center;
+  }
+  
+  .ml-5 {
+    margin-left: 5px;
+  }
+  
+  .ml-25 {
+    margin-left: 25px;
+  }
+  
+  .widthHeight25 {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .bold-text {
+    font-weight: bold;
+  }
+  
+  .unsent-tweet-button {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    background: white;
+    transition: 0.2s;
+  }
+  
+  .unsent-tweet-button-inactive {
+    color: #536471;
+  }
+  
+  .unsent-tweet-button-active {
+    border-bottom: 3px solid #1d9bf0;
+    color: #0f1419;
+  }
+  
+  .unsent-tweet-button-inactive:hover {
+    background-color: rgba(15, 20, 25, 0.1);
+  }
+  
+  .unsent-scheduled-bottom-container {
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .unsent-tweet-button-back {
+    border-radius: 999px;
+    padding: 5px;
+  }
+  
+  .unsent-tweet-button-back:hover {
+    background-color: rgba(15, 20, 25, 0.1);
+  }
+  

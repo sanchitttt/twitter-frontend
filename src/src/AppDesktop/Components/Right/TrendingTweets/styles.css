@@ -1,0 +1,12 @@
+.rightSide-whats-happening-trendingTweets-container {
+  margin-top: 20px;
+  border-radius: 15px;
+  background-color: #f7f9f9;
+}
+
+
+@media screen and (max-width:1015px) {
+  .rightSide-whats-happening-trendingTweets-container{
+    display: none;
+  }
+}

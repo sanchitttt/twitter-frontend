@@ -1,0 +1,111 @@
+#editNewTextStoryContainer {
+    width: 90%;
+    height: 95%;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+#editNewTextStory-secondRow {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    
+}
+
+#editNewTextStory-secondRow-left {
+    width: 30%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#editNewTextStory-secondRow-left-textInput {
+    /* background-color: black; */
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding:25px;
+    width: 90%;
+    border-radius: 15px;
+    /* width: 65%; */
+}
+
+#editNewTextStory-secondRow-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin-right: 15px;
+    border-radius: 15px;
+    height: 100%;
+    background-color: #1c1c1c;
+}
+
+#editNewTextStory-secondRow-left-selectInput{
+    width: 20%;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 200px;
+    padding:25px;
+    width: 90%;
+    border-radius: 15px;
+
+}
+#editNewTextStory-secondRow-left-colorInput{
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins';
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 150px;
+    width: 90%;
+    padding:25px;
+    border-radius: 15px;
+}
+
+#editNewTextStory-secondRow-left-backgroundInput{
+    width: 35%;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    height: 160px;
+    padding:10px 20px;
+    width: 90%;
+    border-radius: 15px;
+
+}
+
+#backgroundsContainer{
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-left:5px;
+}
+.backgroundColorItem{
+    width: 30px;
+    height: 30px;
+}
+
+#editNewTextStory-actualText{
+    font-size: 22px;
+    background-color: antiquewhite;
+    max-width: 100%;
+}
+
+#editNewTextStory-secondRow-right-actualPreview{
+    width: 430px;
+}
+
+#editNewTextStory-secondRow-right-centerText{
+    height: 80%;
+    overflow-y: scroll;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: antiquewhite; */
+}
+

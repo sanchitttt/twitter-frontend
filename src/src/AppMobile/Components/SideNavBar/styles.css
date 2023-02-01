@@ -1,0 +1,95 @@
+#sideNavBar{
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+#sideNavBarTop{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#sideNavBarTopText{
+    font-size: 17px;
+    color: #0f1419;
+    width: 192px;
+    margin-left: 10px;
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+
+#sideNavBarTopImageContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 34px;
+    margin-right: 10px;
+}
+
+#sideNavBarTopImageContainer img{
+    width: 20px;
+    height: 20px;
+}
+
+#sideNavBarSecondRowFirst{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.rounded-img{
+    border-radius: 999px;
+}
+
+
+#sideNavBarThirdRow{
+    margin-left: 10px;
+    font-size: 17px;
+    font-family: 'Poppins';
+    font-weight: bold;
+    color: #0f1419;
+    margin-top: 5px;
+    
+}
+
+#sideNavBarFourthRow{
+    font-size: 15px;
+    color: #536471;
+    margin-left: 10px;
+}
+
+.flexbox-row{
+    display: flex;
+}
+
+.mr-10{
+    margin-right: 10px;
+}
+.fontBold{
+    font-weight: bold;
+    margin-right: 3px;
+    font-size: 15px;
+    color: #0f1419;
+}
+
+#sideNavBarFifthRow{
+    margin-top: 5px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    font-size: 14px;
+    color: #536471;
+}
+
+#sideNavBarLogoutIcon{
+    margin-right: 10px;
+}

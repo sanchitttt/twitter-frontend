@@ -1,0 +1,22 @@
+.pageTop{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 7.5px;
+}
+
+.pageTopRight{
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+}
+
+.pageTopRight img{
+    width: 20px;
+    height: 20px;
+}

@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+#leftSide {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: 'Poppins';
+  width: 256px;
+}
+
+
+.twitter-bird-container {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.twitter-bird{
+  width: 28px;
+  height: 23px;
+}
+.twitter-bird-left {
+  padding: 10px
+}
+
+.twitter-bird-left:hover {
+  background-color: rgba(29, 155, 240, 0.1);
+  border-radius: 999px;
+
+}
+
+@media screen and (max-width:1292px) {
+  #leftBottom {
+    margin-bottom: 35px;
+  }
+
+  #leftSide {
+    width: 60px;
+  }
+
+  #leftBottomSmall {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  #leftBottomSmall img {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    margin-right: 8px;
+    margin-bottom: 20px;
+  }
+
+  #leftBottom {
+    display: none;
+  }
+}
+
+@media screen and (min-width:1292px) {
+  #leftBottomSmall {
+    display: none;
+  }
+
+  #leftBottom {
+    display: flex;
+  }
+}
+
+@media screen and (max-width:1292px) {
+  #leftBottomSmall {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  #leftBottomSmall img {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    margin-right: 8px;
+  }
+
+  #leftBottom {
+    display: none;
+  }
+}
+

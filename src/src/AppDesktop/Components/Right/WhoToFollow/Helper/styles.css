@@ -1,0 +1,32 @@
+.rightSide-whoToFollow-item-leftSide {
+    font-family: 'Poppins' !important;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rightSide-whoToFollow-item-leftSide-leftSide {
+    margin-right: 15px;
+    margin-left: 10px;
+}
+
+.rightSide-whoToFollow-item-leftSide-rightSide {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+
+.rightSide-whoToFollow-item-leftSide-rightSide-darkText {
+    font-size: 15px;
+    font-weight: bold;
+    color: #0f1419;
+    font-family: 'Poppins' !important;
+}
+
+.rightSide-whoToFollow-item-leftSide-rightSide-lightText {
+    font-size: 14px;
+    color: #536471;
+    font-family: 'Poppins' !important;
+}

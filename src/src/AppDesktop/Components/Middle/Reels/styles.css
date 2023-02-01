@@ -1,0 +1,28 @@
+#reelsContainer {
+    border-left: 1px solid #EFF3F4;
+    border-right: 1px solid #EFF3F4;
+    width: 598px !important;
+}
+
+#reelsTopRow {
+    display: flex;
+    justify-content: center;
+}
+
+#addNewReel {
+    width: 100%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px;
+    margin-top: 10px;
+    color: white;
+    background: #1d9bf0;
+    font-family: 'Poppins';
+    transition: 0.2s;
+}
+
+#addNewReel:hover{
+    background-color: rgba(26, 140, 216);
+}

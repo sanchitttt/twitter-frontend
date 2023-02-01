@@ -1,0 +1,72 @@
+#more-tippy {
+    z-index: 10000;
+    background:white;
+    position: absolute;
+    width: 318px;
+    /* min-height: 273px; */
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.more-tippy-top-text{
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Poppins';
+    color: #0F1419;
+}
+
+.more-tippy-top-imgContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 17.5px;
+}
+
+.flexbox-flexDirectionRow-alignItemsCenter{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding:15px 0px;
+}
+
+.flexbox-flexDirectionRow-alignItemsCenter:hover{
+    background-color: rgb(247, 249, 249);
+}
+
+#more-tippy-top{
+    border-bottom: 1px solid #eff3f4;
+}
+
+.btn-group{
+    background-color: white;
+}
+#more-tippy-bottom{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-start; */
+    height: 100%;
+}
+
+.btn{
+    background: white;
+    color: black;
+    outline: none;
+    border: none;
+    font-family: 'Poppins';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: bold;
+}
+.dropdown-menu{
+    color: #0f1419;
+}
+.dropdown-menu-item{
+    display: flex;
+    align-items: center;
+}

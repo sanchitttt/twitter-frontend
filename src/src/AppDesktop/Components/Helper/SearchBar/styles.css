@@ -1,0 +1,101 @@
+#rightSide-searchBar-containerM {
+  width: 231px;
+  background: rgb(247, 249, 249);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 28px;
+  border-radius: 9999px;
+  font-family: 'Poppins' !important;
+}
+
+#rightSide-searchIcon {
+  padding-left: 20px;
+}
+
+#rightSideSearchBarInput {
+  width: 100%;
+  padding-left: 25px;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+#searchBarCloseIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+#searchBarTippy {
+  border-radius: 15px;
+  width: 350px;
+  margin-top: 10px;
+  height: 100px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  z-index: 1000;
+}
+
+#searchBarTippyNoItemsText {
+  margin-top: 10px;
+}
+
+#searchBarMasterContainer {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Poppins' !important;
+}
+
+
+.searchBar-searchItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 0px;
+  width: 100%;
+  transition: 0.2s;
+}
+
+.searchBar-searchItem:hover {
+  background-color: #eff3f4;
+}
+
+.searchBar-searchItem-profilePictureContainer {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-right: 10px;
+}
+
+.searchBar-searchItem-profilePictureContainer img {
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+}
+
+.searchBar-searchItem-accountDetailsTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.searchBar-searchItem-accountDetails-accountName {
+  font-size: 15px;
+  font-family: 'Poppins';
+  color: #0f1419;
+}
+
+.searchBar-searchItem-accountDetails-accountHandle {
+  color: #536471;
+  font-family: 'Poppins';
+  font-size: 14px;
+}

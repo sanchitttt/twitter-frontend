@@ -1,0 +1,31 @@
+#exploreNavbarContainer {
+  display: flex;
+  flex-direction: column;
+
+}
+
+#exploreNavbarLinks::-webkit-scrollbar {
+  display: none;
+}
+
+#exploreNavbarLinks {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  overflow-x: scroll;
+  /* scroll-behavior: hidden; */
+}
+
+.exploreNavBarLinksContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+  padding: 0px 25px;
+
+}
+
+.exploreNavBarLinksContainer:hover {
+  background-color: rgb(180, 180, 188, 0.34);
+}

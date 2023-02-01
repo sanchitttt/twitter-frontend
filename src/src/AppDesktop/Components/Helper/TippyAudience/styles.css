@@ -1,0 +1,103 @@
+
+  .post-tippy {
+    z-index: 100;
+    position: absolute;
+    top: 50px;
+    /* bottom:0; */
+    background: white !important;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: flex-start;
+    color: black;
+    width: 284px;
+    height: 320px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 5px 10px;
+    background-color: #1d9bf0;
+  }
+  
+  .post-tippy-light-text {
+    color: #536471;
+    font-family: var(--fontFamily);
+    font-size: 15px;
+  }
+  
+  .post-tippyWidget-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .post-tippyWidget-text {
+    font-size: 14px;
+    margin-left: 10px;
+    font-weight: bold;
+    font-family: 'Poppins';
+  }
+  
+  .post-tippyWidget {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 5px 0px;
+  }
+  
+  .post-tippyWidget:hover {
+    background-color: rgb(247, 249, 249);
+  }
+  
+  .post-tippy-text {
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: bolder;
+  }
+  
+  .post-tippyWidget-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .post-tippyWidget-right {
+    margin-right: 10px;
+  }
+  
+  .post-stats {
+    margin-right: 50px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .post-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 999px;
+    transition: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  
+  .tweet-post-text-highlighted {
+    color: #1d9bf0;
+    font-family: 'Poppins';
+  }
+  
+  .post-stat-img-container {
+    width: 34.75px;
+    height: 34.75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .post-stat-text {
+    padding: 0px 12px;
+    font-size: 13px;
+    color: #536471;
+  }
+  
