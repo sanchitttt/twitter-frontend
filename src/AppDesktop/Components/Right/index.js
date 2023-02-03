@@ -7,7 +7,7 @@ import { TrendingTweetShowMoreTweets } from '../Helper/TrendingTweet/Helper/inde
 
 
 
-function RightSide() {
+function RightSide({whoToFollowArr}) {
   return (
     <div className='rightSideInsideContainer'>
       <div>
@@ -26,7 +26,7 @@ function RightSide() {
 
       </div>
       <div style={{ marginTop: '20px', marginLeft: '15px' }}>
-        <WhoToFollow />
+        <WhoToFollow whoToFollowArr={whoToFollowArr} />
       </div>
     </div>
   )

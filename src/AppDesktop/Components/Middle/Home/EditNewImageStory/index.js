@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
-import { Modal, Slider } from '@mui/material';
+import { LinearProgress, Modal, Slider } from '@mui/material';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { BACKEND_URL } from '../../../../../config/config';
 import DiscardChangesBox from '../../Profile/EditProfile/DiscardChanges';
 import ImageCarousel from './ImageCarousel';
 import './styles.css';
@@ -29,6 +31,7 @@ function EditNewImageStory({ imageList, setShowEditmageStory }) {
     const [scaleValue, setScaleValue] = useState(34);
     const [rotateValue, setRotateValues] = useState(90);
     const [showDiscardBox, setShowDiscardBox] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         document.getElementById('newImageStoryActualImage0').style.scale = 0.45 + scaleValue * 0.03;
@@ -42,14 +45,53 @@ function EditNewImageStory({ imageList, setShowEditmageStory }) {
     const addTextHandler = () => {
 
     }
+
+    const clickHandler = () => {
+        let id;
+        setProgress(25);
+        const fetch = async () => {
+            try {
+                const result = await axios.post(`${BACKEND_URL}/pages/home/stories/newStory`,
+                    { scaleValue: scaleValue, rotateValue: rotateValue, imgSrc: imageList[0] },
+                    { withCredentials: true })
+
+                if (result) {
+                    id = setTimeout(() => {
+                        setProgress(100);
+                        setTimeout(() => {
+                            setProgress(0);
+                            setShowEditmageStory(false);
+                        }, 500)
+                    }, 2000);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        // console.log(payload)
+        fetch();
+        return () => {
+            clearTimeout(id);
+        }
+    }
+
     return (
         <div id='editNewImageStoryContainer'>
+            {progress > 0 && <div>
+                <LinearProgress
+                    aria-describedby="progress-bar"
+                    variant="determinate"
+                    value={progress}
+                />
+            </div>}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div id='createNewStoryCloseContainer' onClick={() => setShowDiscardBox(true)}>
                     <img src='https://i.ibb.co/Hd13mN0/wrong-black.png' alt='closeIcon' />
                 </div>
                 <div>
-                    <div className='shareToStoryText'>Share to story</div>
+                    <div className='shareToStoryText'
+                        onClick={clickHandler}
+                    >Share to story</div>
                 </div>
             </div>
 

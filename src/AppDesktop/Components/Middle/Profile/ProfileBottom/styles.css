@@ -19,3 +19,13 @@
 .profile-navBarItem:hover{
     background-color: rgb(180, 180, 188, 0.34);
 }
+
+#noTweetsExist{
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins';
+    font-size: 31px;
+    font-weight: bold;
+}

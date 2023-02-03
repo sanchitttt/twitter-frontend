@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import { BACKEND_URL } from '../../../../config/config';
 import AccountDetailsContext from '../../../Contexts/AccountDetailsContext';
 import DarkText from '../Helper/DarkText';
 import LightText from '../Helper/LightText';
@@ -7,8 +9,21 @@ import './styles.css';
 
 function NavBarBottom() {
     const [showTippy, setShowTippy] = useState(false);
+    const [userData,setUserData] = useState({});
     const details = useContext(AccountDetailsContext);
-    console.log(details)
+
+    useEffect(() => {
+        const fetch = async () => {
+            try {
+                let result = await axios.get(`${BACKEND_URL}/other/getAccountDetails`,{withCredentials:true});
+                setUserData(result.data);
+            } catch (error) {
+                throw error;
+            }
+        }
+        fetch();
+    }, []);
+
     const toggler = () => {
         if (showTippy) setShowTippy(false);
         else setShowTippy(true);
@@ -19,12 +34,12 @@ function NavBarBottom() {
             const userTippyIcon = document.getElementById('leftBottom')
             const userTippyIconSmall = document.getElementById('leftBottomSmall');
 
-            if(userTippy){
-                if(userTippy.contains(e.target) || userTippyIcon.contains(e.target) || userTippyIconSmall.contains(e.target)){
+            if (userTippy) {
+                if (userTippy.contains(e.target) || userTippyIcon.contains(e.target) || userTippyIconSmall.contains(e.target)) {
                     // Do nothing
                 }
-                else{
-                    if(showTippy) setShowTippy(false)
+                else {
+                    if (showTippy) setShowTippy(false)
                 }
             }
         })
@@ -34,17 +49,17 @@ function NavBarBottom() {
             })
         }
     })
-
+    
     return (
-        <div style={{position:'relative',width:'100%'}}>
+        <div style={{ position: 'relative', width: '100%' }}>
             <div id='leftBottom' onClick={toggler}>
                 <div id='leftBottomLeft'>
                     <div id='leftBottomLeftLeft'>
-                        <img src='https://i.ibb.co/p4R5q3P/1655230024525.jpg' className='rounded-image' />
+                        <img src={userData.profileSrc} className='rounded-image' />
                     </div>
                     <div id='leftBottomLeftRight'>
-                        <DarkText>marKE9150</DarkText>
-                        <LightText>@lasertoch</LightText>
+                        <DarkText>{userData.accountName}</DarkText>
+                        <LightText>@{userData.accountHandle}</LightText>
                     </div>
                 </div>
                 <div id='leftBottomRight'>
@@ -52,9 +67,9 @@ function NavBarBottom() {
                 </div>
             </div>
             <div id='leftBottomSmall' onClick={toggler}>
-                <img src='https://i.ibb.co/p4R5q3P/1655230024525.jpg' className='rounded-image' />
+                <img src={userData.profileSrc} className='rounded-image' />
             </div>
-            {showTippy && <UserTippy />}
+            {showTippy && <UserTippy accountHandle={userData.accountHandle} />}
         </div>
 
     )

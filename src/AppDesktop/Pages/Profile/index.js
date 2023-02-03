@@ -5,12 +5,13 @@ import TrendingTweets from '../../Components/Right/TrendingTweets';
 import WhoToFollow from '../../Components/Right/WhoToFollow';
 import LeftSide from '../../Components/LeftNavbar'
 import './styles.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {BACKEND_URL} from '../../../config/config';
 import axios from 'axios';
 
-function ProfilePage() {
+function ProfilePage({whoToFollowArr}) {
   const navigate = useNavigate();
+  const {accountHandle} = useParams();
   useEffect(() => {
     const makeReq = async () => {
       try {
@@ -29,11 +30,11 @@ function ProfilePage() {
   return (
     <div id='profilePage'>
       {/* <LeftSide /> */}
-      <Profile />
+      <Profile accountHandleGiven={accountHandle} />
       <div id='profilePage-right'>
         <SearchBar />
         <TrendingTweets />
-        <WhoToFollow />
+        <WhoToFollow  whoToFollowArr={whoToFollowArr} />
       </div>
     </div>
   )

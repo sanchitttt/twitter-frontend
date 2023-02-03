@@ -4,11 +4,11 @@ import RightSide from '../../Components/Right';
 import './styles.css';
 
 
-function ReelsPage() {
+function ReelsPage({whoToFollowArr}) {
   return (
     <div id='reelsPage'>
         <Reels />
-        <RightSide />
+        <RightSide whoToFollowArr={whoToFollowArr} />
     </div>
   )
 }

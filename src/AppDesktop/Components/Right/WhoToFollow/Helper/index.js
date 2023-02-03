@@ -4,11 +4,12 @@ import PrimaryButton from '../../../Helper/PrimaryButton/index';
 import './styles.css';
 
 export const WhoToFollowItemRight = () => {
-  return (
-    <div className="rightSide-whoToFollow-item-leftSide-rightSide">
-      <PrimaryButton blackButton={true}>Follow</PrimaryButton>
-    </div>
-  );
+  return null;
+  // return (
+  //   <div className="rightSide-whoToFollow-item-leftSide-rightSide">
+  //     <PrimaryButton blackButton={true}>Follow</PrimaryButton>
+  //   </div>
+  // );
 };
 export const WhoToFollowItemLeft = ({
   profileSrc,

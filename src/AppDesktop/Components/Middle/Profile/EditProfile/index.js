@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 
 import './styles.css';
 import DiscardChangesBox from './DiscardChanges';
+import { BACKEND_URL } from '../../../../../config/config';
+import axios from 'axios';
 
 const RedditTextField = styled((props) => (
     <TextField InputProps={{ disableUnderline: true }} {...props} />
@@ -48,11 +50,11 @@ function NameLengthLimit({ value, limit }) {
     )
 }
 
-function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation }) {
+function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation ,iWebsite}) {
     const [accountName, setAccountName] = useState(iAccountName);
     const [accountBio, setAccountBio] = useState(iBio);
     const [location, setLocation] = useState(iLocation);
-    const [website, setWebsite] = useState('');
+    const [website, setWebsite] = useState(iWebsite);
     const [showDiscardBox, setShowDiscardBox] = useState(false);
 
     const accountBioHandler = (e) => {
@@ -72,6 +74,28 @@ function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation }) {
     }
 
 
+    const saveHandler = () => {
+        const fetch = async () => {
+            try {
+                const result = await axios.patch(
+                    `${BACKEND_URL}/pages/profile/editProfile`,
+                    {
+                        location: location,
+                        website: website,
+                        accountBio: accountBio,
+                        accountName: accountName
+                    },
+                    { withCredentials: true }
+                )
+                setEditProfileOpen(false);
+            } catch (error) {
+                console.log(error);
+                throw error;
+            }
+        }
+        fetch();
+    }
+
     return (
         <div id='editProfileModal'>
             <div id='editProfileTopRow'>
@@ -86,7 +110,9 @@ function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation }) {
                     </div>
                 </div>
                 <div id='editProfileTopRowRight'>
-                    <div id='editProfileTopRowRightSave'>Save</div>
+                    <div id='editProfileTopRowRightSave'
+                        onClick={saveHandler}
+                    >Save</div>
                 </div>
             </div>
             <div id='editProfileBannerRow'>

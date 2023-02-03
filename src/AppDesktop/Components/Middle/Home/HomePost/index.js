@@ -22,7 +22,7 @@ import { BACKEND_URL } from '../../../../../config/config';
 
 const postIconsArray = [
     ['file', 'https://i.ibb.co/Z83rNRs/gallery-1.png'],
-    ['', 'https://i.ibb.co/BTGcgVR/gif-1.png'],
+    // ['', 'https://i.ibb.co/BTGcgVR/gif-1.png'],
     ['poll', 'https://i.ibb.co/9GrphjN/polling-1.png'],
     ['emoji', 'https://i.ibb.co/RQPpgRp/happy-1.png'],
     ['schedule', 'https://i.ibb.co/Y2wK2RK/event-1.png'],
@@ -94,6 +94,7 @@ function HomePost({ forTimeline }) {
             try {
                 let now;
                 let scheduledDate;
+                let pollOptionsResult = [];
                 if (isAScheduledTweet.bool) {
                     const { amPm, date, hour, minute, month, year } = isAScheduledTweet;
                     let monthIndex;
@@ -103,18 +104,22 @@ function HomePost({ forTimeline }) {
                     }
                     scheduledDate = new Date(year, monthIndex, date, amPm === "AM" ? hour : hour + 12, minute);
                 }
+
                 if (pollDate.changed) {
                     now = new Date();
                     if (pollDate.hours) now.setHours(now.getHours() + pollDate.hours);
                     if (pollDate.days) now.setDate(now.getDate() + pollDate.days);
                     if (pollDate.minutes) now.setMinutes(now.getMinutes() + pollDate.minutes);
-                    console.log(now);
+                    let arr = Object.values(pollOptions);
+                    let arr2 = Object.values(arr[0]);
+                    for (let i = 0; i < arr[1] - 1; i++) {
+                        pollOptionsResult.push([arr2[i], 0])
+                    }
                 }
-
 
                 let obj = {
                     tweetText: text,
-                    poll: { expiresAt: now, options: pollOptions },
+                    poll: { expiresAt: now, options: pollOptionsResult },
                     scheduledDate: scheduledDate ? scheduledDate : null,
                     audience: audience,
                     whoCanReply: whoCanReplyText,
@@ -224,7 +229,7 @@ function HomePost({ forTimeline }) {
     }, []);
 
     return (
-        <div style={{marginTop:'15px'}}>
+        <div style={{ marginTop: '15px' }}>
             {progress > 0 && <div>
                 <LinearProgress
                     aria-describedby="progress-bar"

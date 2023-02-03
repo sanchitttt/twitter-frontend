@@ -9,7 +9,7 @@ import { BACKEND_URL } from '../../../config/config';
 import './styles.css';
 import ErrorBoundary from '../../../ErrorBoundary';
 
-function HomePage() {
+function HomePage({whoToFollowArr}) {
   const navigate = useNavigate();
   // useEffect(() => {
   //   const makeReq = async () => {
@@ -35,7 +35,7 @@ function HomePage() {
       <ErrorBoundary>
         {/* <LeftSide /> */}
         <Home />
-        <RightSide />
+        <RightSide whoToFollowArr={whoToFollowArr} />
       </ErrorBoundary>
 
     </div>

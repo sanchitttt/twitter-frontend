@@ -1,20 +1,22 @@
+import axios from 'axios';
 import React, { useRef } from 'react';
+import { BACKEND_URL } from '../../../../config/config';
 import ReelItem from './ReelItem';
 import './styles.css';
 
 
 const reels = [
   {
-    reelSrc: 'blob:http://localhost:3000/ddbc1187-8300-4b60-b36c-41fec71a772f',
-    profileSrc:'https://lh3.googleusercontent.com/a/AEdFTp4eaL1ZMplUZjLVGKJDuWXpxxJxBeM0sDne0pw3iA=s96-c',
-    accountName : 'sanchit',
-    accountHandle : 'sanchit08'
+    reelSrc: 'blob:http://localhost:3000/d8182cb4-8020-4dfa-98b2-f7be6ce6b511',
+    profileSrc: 'https://lh3.googleusercontent.com/a/AEdFTp4eaL1ZMplUZjLVGKJDuWXpxxJxBeM0sDne0pw3iA=s96-c',
+    accountName: 'sanchit',
+    accountHandle: 'sanchit08'
   },
   {
     reelSrc: 'blob:http://localhost:3000/4cc6b206-3e87-42ee-8fa1-5c997716d519',
-    profileSrc:'https://lh3.googleusercontent.com/a/AEdFTp4eaL1ZMplUZjLVGKJDuWXpxxJxBeM0sDne0pw3iA=s96-c',
-    accountName : 'sanchit',
-    accountHandle : 'sanchit08'
+    profileSrc: 'https://lh3.googleusercontent.com/a/AEdFTp4eaL1ZMplUZjLVGKJDuWXpxxJxBeM0sDne0pw3iA=s96-c',
+    accountName: 'sanchit',
+    accountHandle: 'sanchit08'
   },
 
 ]
@@ -29,7 +31,18 @@ function Reels() {
   const inputChangeHandler = (e) => {
     const video = e.target.files[0];
     const url = URL.createObjectURL(video);
-    console.log(url);
+    console.log('called',url);
+    const postReels = async (url) => {
+      try {
+        console.log(`${BACKEND_URL}/pages/reels/postNew`)
+        const result = await axios.post(`${BACKEND_URL}/pages/reels/postNew`, { videoSrc: url }, { withCredentials: true });
+        console.log(result);
+      }
+      catch (err) {
+        throw err;
+      }
+    }
+    postReels(url);
   }
 
 
@@ -53,7 +66,7 @@ function Reels() {
           Add new reel
         </div>
       </div>
-      {reels.map((reel,idx) => {
+      {reels.map((reel, idx) => {
         return <ReelItem
           key={idx}
           profileSrc={reel.profileSrc}

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BACKEND_URL } from '../../../config/config';
 
-function NotificationsPage() {
+function NotificationsPage({whoToFollowArr}) {
   const navigate = useNavigate();
   useEffect(() => {
     const makeReq = async () => {
@@ -33,7 +33,7 @@ function NotificationsPage() {
       <div id='notificationsPage-right'>
         <SearchBar />
         <TrendingTweets />
-        <WhoToFollow />
+        <WhoToFollow whoToFollowArr={whoToFollowArr} />
       </div>
     </div>
   )

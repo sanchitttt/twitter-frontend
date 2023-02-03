@@ -93,6 +93,11 @@
     height: 133px;
     border-radius: 999px;
     box-shadow: rgba(0, 0, 0, 0.03) 0px 0px 2px inset;
+    transition: 0.2s;
+}
+
+#profile-details-firstRow-profilePicture:hover{
+   opacity: 0.9;
 }
 
 #profile-details-firstRow-profilePicture img{
@@ -106,6 +111,7 @@
     align-items: center;
     width:111px;
     border-radius: 9999px;
+    font-family: 'Poppins';
     height: 34px;
     border : 1px solid rgb(207, 217, 222);
     font-size: 15px;
@@ -177,6 +183,24 @@
     align-items: center;
 }
 
+#profile-details-firstRow-moreAndFollowButtons{
+    display: flex;
+    align-items: center;
+}
+#profile-details-firstRow-moreButtonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 999px;
+    border: 1px solid #eff3f4;
+}
+
+#profile-details-firstRow-moreButtonContainer img{
+    width: 13px;
+    height: 13px;
+}
 .darkText{
     font-size: 14px;
     font-weight: bold;
@@ -205,4 +229,18 @@
 .isALink{
     color: #1D9BF0;
     font-family: 'Poppins';
+}
+
+#alreadyFollowing-btn{
+    width: 103px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 999px;
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-weight: bold;
+    color:#0f1419;
+    border: 1px solid #eff3f4;
 }

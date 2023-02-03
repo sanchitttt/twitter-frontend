@@ -234,8 +234,8 @@ const HomePoll = ({ pollOptions, pollDate, setPollDate, setPollOptions, activeOp
                     fullWidth
                     onClick={() => {
                       activeOptionHandler(null)
-                      if(pollDate) setPollDate(null);
-                      if(pollOptions) setPollOptions([]);
+                      if(pollDate) setPollDate({ changed: false, hours: null, minutes: null, days: null });
+                      if(pollOptions) setPollOptions({});
                     }}
                   >
                     Remove poll

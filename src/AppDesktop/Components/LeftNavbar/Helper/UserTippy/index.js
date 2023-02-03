@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 
-function UserTippy() {
+function UserTippy({ accountHandle }) {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
@@ -21,7 +21,7 @@ function UserTippy() {
           borderBottomLeftRadius: '15px',
           borderBottomRightRadius: '15px'
         }}
-      ><div >Log out @lasertoch</div></div>
+      ><div >Log out @{accountHandle}</div></div>
     </div>
   )
 }

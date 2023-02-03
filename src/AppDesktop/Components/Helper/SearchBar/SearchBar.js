@@ -1,24 +1,46 @@
 import "./styles.css";
 import React, { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from '../../../../config/config';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-const SearchItem = () => {
-  return <div>
-    hi
+const SearchItem = ({ profileSrc, accountName, accountHandle }) => {
+  const navigate = useNavigate();
+  const clickHandler = () => {
+    navigate(`/profile/${accountHandle}`);
+  }
+  return <div className="searchBar-searchItem"
+    onClick={clickHandler}
+  >
+    <div style={{ marginLeft: '15px' }} className="searchBar-searchItem-profilePictureContainer">
+      <img src={profileSrc} />
+    </div>
+    <div style={{ marginLeft: '5px' }} className='searchBar-searchItem-accountDetailsTextContainer'>
+      <div className='searchBar-searchItem-accountDetails-accountName'>{accountName}</div>
+      <div className='searchBar-searchItem-accountDetails-accountHandle'>@{accountHandle}</div>
+    </div>
   </div>
 };
 const SearchItems = ({ items }) => {
+  let height;
+  if (items.length > 0) {
+    height = 76 * items.length;
+  }
   return (
-    <div id="searchBarTippy">
+    <div id="searchBarTippy" style={{ height: height }}>
       {items.length === 0 ? (
         <div id="searchBarTippyNoItemsText">
           Try searching for people, topics, or keywords
         </div>
       ) : (
         items.map((item, idx) => {
-          return <SearchItem key={idx} />;
+          return <SearchItem
+            profileSrc={item.profileSrc}
+            accountName={item.accountName}
+            accountHandle={item.accountHandle}
+            key={idx}
+          />;
         })
       )}
     </div>
@@ -38,20 +60,26 @@ export default function SearchBar() {
             text: text
           }
         });
-        console.log(result.data)
         setItems(result.data);
       } catch (error) {
         console.log(error.response);
+        setItems([]);
       }
     }
-    let timeoutId = setTimeout(() => {
-      fetch();
-    }, 750)
+    let timeoutId;
+    if (text.length) {
+      timeoutId = setTimeout(() => {
+        fetch();
+      }, 750)
+    }
+
 
     return () => {
       clearTimeout(timeoutId);
     }
   }, [text]);
+
+
   const clickHandler = () => {
     setIsHovered(true);
     myRef.current.focus();
@@ -81,10 +109,10 @@ export default function SearchBar() {
     };
   }, []);
   const myRef = useRef(null);
-
-  useEffect(() => {
-    setItems(text.split(""));
-  }, [text]);
+  
+  // useEffect(() => {
+  //   setItems(text.split(""));
+  // }, [text]);
   return (
     <div id="searchBarMasterContainer">
       <div

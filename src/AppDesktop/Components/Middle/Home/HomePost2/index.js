@@ -17,7 +17,7 @@ import { ImagePreview } from '../Helper/ImageSection';
 
 const postIconsArray = [
   ['file', 'https://i.ibb.co/Z83rNRs/gallery-1.png'],
-  ['', 'https://i.ibb.co/BTGcgVR/gif-1.png'],
+  // ['', 'https://i.ibb.co/BTGcgVR/gif-1.png'],
   ['poll', 'https://i.ibb.co/9GrphjN/polling-1.png'],
   ['emoji3', 'https://i.ibb.co/RQPpgRp/happy-1.png'],
   ['schedule', 'https://i.ibb.co/Y2wK2RK/event-1.png'],
@@ -104,9 +104,19 @@ function HomePost2({
 
       const result = verifyAllPollOptionsExists(Object.values(pollOptions.values), pollOptions.count);
       if (result) {
-        if (!tweetAllEnabled && text.length) setTweetAllEnabled(true)
-        tweets[idx].poll.expiresAt = pollDate;
-        tweets[idx].poll.options = pollOptions;
+        if (!tweetAllEnabled && text.length) setTweetAllEnabled(true);
+        const currDate = new Date();
+        if(pollDate.hours) currDate.setHours(currDate.getHours() + pollDate.hours);
+        if(pollDate.minutes) currDate.setMinutes(currDate.getMinutes() + pollDate.minutes);
+        if(pollDate.days) currDate.setDate(currDate.getDate() + pollDate.days);
+        let pollOptionsResult = [];
+        let arr = Object.values(pollOptions);
+        let arr2 = Object.values(arr[0]);
+        for (let i = 0; i < arr[1] - 1; i++) {
+            pollOptionsResult.push([arr2[i], 0])
+        }
+        tweets[idx].poll.expiresAt = currDate;
+        tweets[idx].poll.options = pollOptionsResult;
       }
       else {
         if (tweetAllEnabled) setTweetAllEnabled(false);
@@ -161,9 +171,6 @@ function HomePost2({
     else if (!tweetAllEnabled && input1.length) {
       setTweetAllEnabled(true);
     }
-    setValue(Math.ceil((myRef.current.value.length / 280) * 100));
-    let rows = Math.ceil(totalCount / rowThreshold);
-    document.getElementById(homePostInputId).rows = rows;
   };
 
   const emojiClickHandler = (e) => {
@@ -172,6 +179,7 @@ function HomePost2({
   };
 
   const tweetAllHandler = async () => {
+    // console.log(tweets);
     let id;
     const fetch = async () => {
       try {

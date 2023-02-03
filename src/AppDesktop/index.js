@@ -25,36 +25,46 @@ import AccountDetailsContext from './Contexts/AccountDetailsContext';
 let accountDetails;
 function AppDesktop() {
   const [backgroundColorContext, setBackgroundColorContext] = useState('white');
-  const [colorContext, setColorContext] = useState('#009BF0');
+  const [colorContext, setColorContext] = useState('#009BF0')
+  const [whoToFollowArr, setWhoToFollowArr] = useState([]);
+
 
 
   useEffect(() => {
-    const fetchAccountDetails = async () => {
+    const fetch = async () => {
       try {
-        let result = await axios.get(`${BACKEND_URL}/other/getAccountDetails`, { withCredentials: true })
-        accountDetails = result.data;
+        const result = await axios.get(`${BACKEND_URL}/other/whoToFollow`, { withCredentials: true });
+        const withoutDuplicates = [];
+        const map = new Map();
+        result.data.forEach((item) => {
+          if (!map.has(item.accountHandle)) {
+            withoutDuplicates.push(item);
+            map.set(item.accountHandle, 1);
+          }
+        })
+        setWhoToFollowArr(withoutDuplicates);
       } catch (error) {
-        console.log(error);
       }
     }
-    fetchAccountDetails();
+    fetch();
   }, []);
 
-  // console.log(accountDetails)
   return (
     <div id="AppDesktop">
       <BackgroundContext.Provider value={{ backgroundValue: backgroundColorContext, backgroundHandler: setBackgroundColorContext }}>
         <ColorContext.Provider value={{ colorValue: colorContext, colorHandler: setColorContext }}>
           <AccountDetailsContext.Provider value={{ ...accountDetails }}>
+            {/* <ErrorBoundary> */}
             <LeftSide />
             <Routes>
               <Route path="/" element={<NotLoggedIn />} />
               <Route path='/login/success' element={<SuccessfullLogin />} />
               <Route path='/logout' element={<LogOutPage />} />
-              <Route path='/home' element={<HomePage />} />
-              <Route path='/explore' element={<ExplorePage />} />
-              <Route path='/reels' element={<ReelsPage />} />
-              <Route path='/notifications' element={<NotificationsPage />} />
+              <Route path='/home' element={<HomePage whoToFollowArr={whoToFollowArr} />} />
+              <Route path='/explore' element={<ExplorePage whoToFollowArr={whoToFollowArr} />} />
+              <Route path='/reels' element={<ReelsPage whoToFollowArr={whoToFollowArr} />} />
+              <Route path='/notifications' element={<NotificationsPage whoToFollowArr={whoToFollowArr} />} />
+              <Route path='/profile/:accountHandle' element={<ProfilePage whoToFollowArr={whoToFollowArr} />} />
               <Route path='/messages'>
                 <Route path='' element={<MessagesPage />} />
                 <Route path='settings' element={<MessageSettingsPage />} />
@@ -62,9 +72,11 @@ function AppDesktop() {
                 <Route path=':id' element={<MessageChatPage />} />
               </Route>
               <Route path='/lists' element={<ListsPage />} />
-              <Route path='/profile' element={<ProfilePage />} />
-              <Route path='/bookmarks' element={<BookmarksPage />} />
+              <Route path='/profile' element={<ProfilePage whoToFollowArr={whoToFollowArr} />} />
+              <Route path='/bookmarks' element={<BookmarksPage whoToFollowArr={whoToFollowArr} />} />
             </Routes>
+            {/* </ErrorBoundary> */}
+
           </AccountDetailsContext.Provider>
         </ColorContext.Provider>
       </BackgroundContext.Provider>
