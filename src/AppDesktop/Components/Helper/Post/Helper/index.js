@@ -238,7 +238,7 @@ export const Pikaso = () => {
   );
 };
 
-export const PostMoreTippy = ({ idx, bookmarkTweetFn }) => {
+export const PostMoreTippy = ({ setShowTippy, idx, bookmarkTweetFn, showToastify }) => {
   const id = `post-more-tippy${idx}`;
   return (
     <div className='post-more-tippy' id={id}>
@@ -247,6 +247,8 @@ export const PostMoreTippy = ({ idx, bookmarkTweetFn }) => {
           onClick={() => {
             if (item[1] === 'Save') {
               bookmarkTweetFn();
+              setShowTippy(false);
+              showToastify();
             }
           }}
         >
@@ -259,10 +261,10 @@ export const PostMoreTippy = ({ idx, bookmarkTweetFn }) => {
   )
 }
 
-export const MoreOptions = ({ idx, bookmarkTweetFn }) => {
+export const MoreOptions = ({ idd, bookmarkTweetFn, showToastify }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showTippy, setShowTippy] = useState(false);
-  const id = `postMoreOptions${idx}`
+  const id = `postMoreOptions${idd}`
 
   const clickHandler = () => {
     setShowTippy(true);
@@ -278,7 +280,7 @@ export const MoreOptions = ({ idx, bookmarkTweetFn }) => {
   useEffect(() => {
     document.addEventListener("click", (e) => {
       const moreOptionsContainer = document.getElementById(id);
-      const actualTippy = document.getElementById(`post-more-tippy${idx}`);
+      const actualTippy = document.getElementById(`post-more-tippy${idd}`);
 
       if (moreOptionsContainer) {
         if (moreOptionsContainer.contains(e.target) || actualTippy.contains(e.target)) {
@@ -330,7 +332,7 @@ export const MoreOptions = ({ idx, bookmarkTweetFn }) => {
         />
       </div>
     )}
-    {showTippy && <PostMoreTippy bookmarkTweetFn={bookmarkTweetFn} idx={idx} />}
+    {showTippy && <PostMoreTippy setShowTippy={setShowTippy} showToastify={showToastify} bookmarkTweetFn={bookmarkTweetFn} idx={idd} />}
   </div>
 
 };
@@ -480,13 +482,15 @@ export const TweetAttachments = ({ data }) => {
 };
 
 export const AccountDetailsAndScreenshotAndMore = ({
+  id,
   idx,
   accountName,
   accountHandle,
   timeStamp,
   typeOfVerification,
   verified,
-  bookmarkTweetFn
+  bookmarkTweetFn,
+  showToastify
 }) => {
   return (
     <div className="accountDetailsAndScreenshotAndMoreContainer">
@@ -499,7 +503,7 @@ export const AccountDetailsAndScreenshotAndMore = ({
       </div>
       <div className="accountDetailsAndScreenshotAndMoreRightSideContainer">
         <Pikaso />
-        <MoreOptions bookmarkTweetFn={bookmarkTweetFn} idx={idx} />
+        <MoreOptions idd={id} showToastify={showToastify} bookmarkTweetFn={bookmarkTweetFn} idx={idx} />
       </div>
     </div>
   );

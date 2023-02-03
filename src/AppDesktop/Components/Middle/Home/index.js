@@ -56,20 +56,20 @@ function Home() {
   const [showTweetPreferenceTippy, setShowTweetPreferenceTippy] = useState(false);
   const [showTippy, setShowTippy] = useState(false);
   const [typeOfTweets, setTypeOfTweets] = useState('latest');
-  const [postsArr,setPostsArr] = useState([]);
-  const [currentPost,setCurrentPost] = useState({});
+  const [postsArr, setPostsArr] = useState([]);
+  const [currentPost, setCurrentPost] = useState({});
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get(`${BACKEND_URL}/pages/home/timeline`,{withCredentials:true});
+        const result = await axios.get(`${BACKEND_URL}/pages/home/timeline`, { withCredentials: true });
         setPostsArr(result.data);
       } catch (error) {
         console.log(error);
       }
     }
     fetch();
-  },[]);
+  }, []);
 
   useEffect(() => {
     document.addEventListener('click', (e) => {
@@ -81,26 +81,26 @@ function Home() {
           // Do nothing
         }
         else {
-            setShowTippy(false);
+          setShowTippy(false);
         }
       }
     })
     return () => {
-      document.removeEventListener('click' , () => {
+      document.removeEventListener('click', () => {
 
       })
     }
   })
 
   const toggleHandler = () => {
-    if(showTippy) setShowTippy(false);
+    if (showTippy) setShowTippy(false);
     else setShowTippy(true);
   }
   return (
     <div className='custom-card' style={{ height: '100vh' }}>
       <div id='home'>
         <div id='home-top-heading'>
-          <div id='home-top-heading-text' style={{fontFamily:'Poppins'}}>
+          <div id='home-top-heading-text' style={{ fontFamily: 'Poppins' }}>
             Home
           </div>
           <div id='tweetPreferenceTippyImgRef' className='home-top-heading-img-container'
@@ -116,13 +116,14 @@ function Home() {
           </div>
         </div>
         <div id='homeStoriesContainer'>
-            <Stories />
+          <Stories />
         </div>
         <HomePost />
         <div id='home-timeline'>
           <Posts forTimeline postsArr={postsArr} />
         </div>
       </div>
+      
     </div>
 
   )

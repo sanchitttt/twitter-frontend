@@ -1,5 +1,7 @@
 import React from "react";
 import './styles.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {
   PostStats,
@@ -41,38 +43,67 @@ const Post = ({
 
 }) => {
 
+  const showToastify = () => {
+    toast.success('Tweet bookmarked!', {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  }
   const bookmarkTweetFn = () => {
     const fetch = async () => {
       try {
-        const result = await axios.post(`${BACKEND_URL}/pages/bookmarks`,{
-          tweetBody : {
-            length:length,
-            idx:idx,
-            id:id,
-            poll:poll,
-            profileSrc:profileSrc,
-            isAThread:isAThread,
-            // tweets : isAThread?originalTweetThread:false,
-            accountName:accountName,
-            accountHandle:accountHandle,
-            verified:verified,
-            typeOfVerification:typeOfVerification,
-            timeStamp:timeStamp,
-            tweetText:tweetText,
-            taggedHandles:taggedHandles,
-            whoCanReply:whoCanReply,
-            views:views,
-            replies:replies,
-            retweets:retweets,
-            likes:likes,
-            attachments:attachments,
-            relation:relation,
-            likedAlready:likedAlready,
-            alreadyVoted:alreadyVoted,
-            retweetedAlready:retweetedAlready
+        const payload = isAThread ? {
+          length: length,
+          idx: idx,
+          id: id,
+          poll: poll,
+          profileSrc: profileSrc,
+          isAThread: isAThread,
+          tweets: isAThread ? originalTweetThread : false,
+          accountName: accountName,
+          accountHandle: accountHandle,
+          verified: verified,
+          typeOfVerification: typeOfVerification,
+        } : {
+          length: length,
+          idx: idx,
+          id: id,
+          poll: poll,
+          profileSrc: profileSrc,
+          isAThread: isAThread,
+          tweets: isAThread ? originalTweetThread : false,
+          accountName: accountName,
+          accountHandle: accountHandle,
+          verified: verified,
+          typeOfVerification: typeOfVerification,
+          timeStamp: timeStamp,
+          tweetText: tweetText,
+          taggedHandles: taggedHandles,
+          whoCanReply: whoCanReply,
+          views: views,
+          replies: replies,
+          retweets: retweets,
+          likes: likes,
+          attachments: attachments,
+          relation: relation,
+          likedAlready: likedAlready,
+          alreadyVoted: alreadyVoted,
+          retweetedAlready: retweetedAlready
+        }
+        const result = await axios.post(`${BACKEND_URL}/pages/bookmarks`, {
+          tweetBody: {
+            ...payload
           }
-         
-        }, {withCredentials:true});
+
+        }, { withCredentials: true });
+
+
       } catch (error) {
         throw error;
       }
@@ -80,6 +111,7 @@ const Post = ({
     fetch();
   }
   let height;
+
   if (attachments && attachments.length && poll && poll.options) {
     let optionsLength = (poll.options.length) * 30 + 22.5;
     height = `${Math.ceil((tweetText.length / 70) * 23) + 65 + 500 + optionsLength}px`;
@@ -117,6 +149,8 @@ const Post = ({
             typeOfVerification={typeOfVerification}
             timeStamp={timeStamp}
             bookmarkTweetFn={bookmarkTweetFn}
+            showToastify={showToastify}
+            id={id}
           />
           <TweetPostText>{tweetText}</TweetPostText>
           <PollViewer alreadyVoted={alreadyVoted} id={id} accountHandle={accountHandle} poll={poll} />
@@ -124,7 +158,7 @@ const Post = ({
           {/* <TaggedHandles data={taggedHandles} /> */}
 
           <PostStats
-          accountHandle={accountHandle}
+            accountHandle={accountHandle}
             id={id}
             likedAlready={likedAlready}
             retweetedAlready={likedAlready}
@@ -137,7 +171,19 @@ const Post = ({
         </div>
       </div>
       {/* </div> */}
+      <ToastContainer
 
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 };
