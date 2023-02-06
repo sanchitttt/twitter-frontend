@@ -6,6 +6,7 @@ import TweetsPreferenceTippy from './Helper/Tippy';
 import Stories from './Stories';
 import axios from 'axios';
 import { BACKEND_URL } from '../../../../config/config';
+import { CircularProgress } from '@mui/material';
 
 
 
@@ -58,12 +59,15 @@ function Home() {
   const [typeOfTweets, setTypeOfTweets] = useState('latest');
   const [postsArr, setPostsArr] = useState([]);
   const [currentPost, setCurrentPost] = useState({});
+  const [showLoading, setShowLoading] = useState(true);
+
 
   useEffect(() => {
     const fetch = async () => {
       try {
         const result = await axios.get(`${BACKEND_URL}/pages/home/timeline`, { withCredentials: true });
         setPostsArr(result.data);
+        setShowLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -96,6 +100,9 @@ function Home() {
     if (showTippy) setShowTippy(false);
     else setShowTippy(true);
   }
+
+
+
   return (
     <div className='custom-card' style={{ height: '100vh' }}>
       <div id='home'>
@@ -106,12 +113,12 @@ function Home() {
           <div id='tweetPreferenceTippyImgRef' className='home-top-heading-img-container'
             onClick={toggleHandler}
           >
-            <img
+            {/* <img
               src='https://i.ibb.co/ZBQj15g/star-needed.png'
               width='24px'
               height='24px'
               alt='load-fresh-tweets'
-            />
+            /> */}
             {showTippy && <div id='tweetPreferenceTippyRef'><TweetsPreferenceTippy type={typeOfTweets} typeHandler={setTypeOfTweets} /></div>}
           </div>
         </div>
@@ -119,11 +126,17 @@ function Home() {
           <Stories />
         </div>
         <HomePost />
-        <div id='home-timeline'>
-          <Posts forTimeline postsArr={postsArr} />
-        </div>
+        {showLoading ?
+          <div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{marginTop:'35px'}}><CircularProgress variant="indeterminate" /></div>
+          </div> : 
+          <div id='home-timeline'>
+
+            <Posts forTimeline postsArr={postsArr} />
+          </div>}
+
       </div>
-      
+
     </div>
 
   )

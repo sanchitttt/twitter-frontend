@@ -4,6 +4,8 @@ import './styles.css';
 import { FormControl, InputLabel, MenuItem, Modal, Select } from '@mui/material';
 import DiscardChangesBox from '../../Profile/EditProfile/DiscardChanges';
 import { color } from '@mui/system';
+import axios from 'axios';
+import { BACKEND_URL } from '../../../../../config/config';
 
 
 const backgrounds = [
@@ -62,6 +64,7 @@ function EditNewTextStory({ setShowEditTextStory }) {
     const [showDiscardBox, setShowDiscardBox] = useState(false);
 
 
+
     useEffect(() => {
         document.getElementById('newTextStoryPreviewInputField').style.fontSize = '22px';
         document.getElementById('newTextStoryPreviewInputField').style.textAlign = 'center';
@@ -81,7 +84,30 @@ function EditNewTextStory({ setShowEditTextStory }) {
         else if (selectValue === 'Casual') document.getElementById('newTextStoryPreviewInputField').style.fontFamily = 'Caveat';
         else if (selectValue === 'Fancy') document.getElementById('newTextStoryPreviewInputField').style.fontFamily = 'Permanent Marker';
         else if (selectValue === 'Headline') document.getElementById('newTextStoryPreviewInputField').style.fontFamily = 'Russo One';
-    }, [selectValue])
+    }, [selectValue]);
+
+
+    const shareToStoryHandler = () => {
+        const fetch = async () => {
+            try {
+                console.log(colorValue, selectedBackground)
+                const result = await axios.post(`${BACKEND_URL}/pages/home/stories/newTextStory`, {
+                    type: 'text',
+                    text: text,
+                    fontFamily: fontFamily,
+                    textColor: colorValue,
+                    backgroundColor: backgrounds[selectedBackground].backgroundColor,
+                    backgroundImage: backgrounds[selectedBackground].backgroundImage
+                }, { withCredentials: true })
+                let id = setTimeout(() => {
+                    setShowEditTextStory(false);
+                },1000)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetch();
+    }
 
     return (
         <div id='editNewTextStoryContainer'>
@@ -90,7 +116,10 @@ function EditNewTextStory({ setShowEditTextStory }) {
                     <img src='https://i.ibb.co/Hd13mN0/wrong-black.png' alt='closeIcon' />
                 </div>
                 <div>
-                    <div className='shareToStoryText'>Share to story</div>
+                    <div className='shareToStoryText'
+                        onClick={shareToStoryHandler}
+                    >Share to story
+                    </div>
                 </div>
 
             </div>

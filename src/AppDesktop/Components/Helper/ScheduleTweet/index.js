@@ -408,8 +408,7 @@ const ScheduleTweet = React.forwardRef(
         hour,
         e.target.value
       );
-      console.log(currDateStamp);
-      console.log(eventDateStamp);
+
       if (eventDateStamp < currDateStamp) {
         setTimeError(true);
       } else if (timeError) {
@@ -602,7 +601,7 @@ const ScheduleTweet = React.forwardRef(
             <TimeZone />
           </div>
           <hr />
-          <ScheduleFooter tweetThread={tweetThread} id={id} activeOptionHandler={activeOptionHandler} />
+          {/* <ScheduleFooter tweetThread={tweetThread} id={id} activeOptionHandler={activeOptionHandler} /> */}
         </div>
         {/* ,document.getElementById('newTweet-schedule'))} */}
       </div>

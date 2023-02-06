@@ -19,7 +19,7 @@ function Notifications() {
           />
         </div>
       </div>
-      <NotificationsNavBar />
+      {/* <NotificationsNavBar /> */}
       <div>
       </div>
     </div>

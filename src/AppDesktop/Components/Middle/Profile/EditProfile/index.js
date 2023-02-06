@@ -6,6 +6,7 @@ import './styles.css';
 import DiscardChangesBox from './DiscardChanges';
 import { BACKEND_URL } from '../../../../../config/config';
 import axios from 'axios';
+import ReactFileReader from 'react-file-reader';
 
 const RedditTextField = styled((props) => (
     <TextField InputProps={{ disableUnderline: true }} {...props} />
@@ -50,12 +51,14 @@ function NameLengthLimit({ value, limit }) {
     )
 }
 
-function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation ,iWebsite}) {
+function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation, iWebsite, iProfilePicture, iProfileBanner }) {
     const [accountName, setAccountName] = useState(iAccountName);
     const [accountBio, setAccountBio] = useState(iBio);
     const [location, setLocation] = useState(iLocation);
     const [website, setWebsite] = useState(iWebsite);
+    const [profilePicture, setProfilePicture] = useState(iProfilePicture);
     const [showDiscardBox, setShowDiscardBox] = useState(false);
+    const [profileBanner, setProfileBanner] = useState(iProfileBanner);
 
     const accountBioHandler = (e) => {
         if (accountName.length < 160) setAccountBio(e.target.value);
@@ -73,17 +76,27 @@ function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation ,iWebsi
         if (website.length < 100) setWebsite(e.target.value);
     }
 
+    const handleFiles = (files) => {
+        setProfilePicture(files.base64);
+    };
 
+    const handleFilesForBanner = (files) => {
+        setProfileBanner(files.base64)
+    }
     const saveHandler = () => {
         const fetch = async () => {
             try {
+                console.log(profileBanner.slice(0,5) , 'at edit profile frontend')
                 const result = await axios.patch(
                     `${BACKEND_URL}/pages/profile/editProfile`,
                     {
                         location: location,
                         website: website,
                         accountBio: accountBio,
-                        accountName: accountName
+                        accountName: accountName,
+                        profileSrc: profilePicture,
+                        profileBanner: profileBanner
+
                     },
                     { withCredentials: true }
                 )
@@ -116,13 +129,33 @@ function EditProfile({ setEditProfileOpen, iAccountName, iBio, iLocation ,iWebsi
                 </div>
             </div>
             <div id='editProfileBannerRow'>
+                {profileBanner && <img src={profileBanner} width='100%' height={'100%'} />}
                 <div id='editProfileBannerRowMiddleUploadIcon'>
-                    <img src='https://i.ibb.co/28Zb4PG/camera-white.png' alt='uploadImg' />
+                    <ReactFileReader
+                        fileTypes={[".csv", ".zip", "png", "jpeg"]}
+                        base64={true}
+                        multipleFiles={false}
+                        handleFiles={handleFilesForBanner}
+                    >
+                        <img src={'https://i.ibb.co/28Zb4PG/camera-white.png'} alt='uploadImg' />
+                    </ReactFileReader>
                 </div>
             </div>
             <div id='editProfileThirdRow'>
                 <div id='editProfileThirdRowProfilePictureContainer'>
-                    <img src='https://pbs.twimg.com/profile_images/1555754123420913664/P0uQDM-b_400x400.jpg' alt='' />
+                    <img className='profilePictureSS' src={profilePicture} alt='' />
+                    <ReactFileReader
+                        fileTypes={[".csv", ".zip"]}
+                        base64={true}
+                        multipleFiles={false}
+                        handleFiles={handleFiles}
+                    >
+                        <div style={{ borderRadius: '999px', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '50%', left: '50%', transform: "translate(-50%,-50%)", width: '30px', height: '30px', background: 'rgba(15, 20, 25, 0.75)' }}>
+                            <img width='20px' height='20px' src='https://i.ibb.co/28Zb4PG/camera-white.png' alt='uploadImg' />
+                        </div>
+                    </ReactFileReader>
+
+
                 </div>
             </div>
             <div id='editProfileFourthRow'>

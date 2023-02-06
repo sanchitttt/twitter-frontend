@@ -7,22 +7,12 @@ import LightText from '../Helper/LightText';
 import UserTippy from '../Helper/UserTippy';
 import './styles.css';
 
-function NavBarBottom() {
+function NavBarBottom({userData}) {
     const [showTippy, setShowTippy] = useState(false);
-    const [userData,setUserData] = useState({});
+    // const [userData,setUserData] = useState({});
     const details = useContext(AccountDetailsContext);
 
-    useEffect(() => {
-        const fetch = async () => {
-            try {
-                let result = await axios.get(`${BACKEND_URL}/other/getAccountDetails`,{withCredentials:true});
-                setUserData(result.data);
-            } catch (error) {
-                throw error;
-            }
-        }
-        fetch();
-    }, []);
+ 
 
     const toggler = () => {
         if (showTippy) setShowTippy(false);
@@ -55,11 +45,11 @@ function NavBarBottom() {
             <div id='leftBottom' onClick={toggler}>
                 <div id='leftBottomLeft'>
                     <div id='leftBottomLeftLeft'>
-                        <img src={userData.profileSrc} className='rounded-image' />
+                        <img src={userData.data.profileSrc} className='rounded-image' />
                     </div>
                     <div id='leftBottomLeftRight'>
-                        <DarkText>{userData.accountName}</DarkText>
-                        <LightText>@{userData.accountHandle}</LightText>
+                        <DarkText>{userData.data.accountName}</DarkText>
+                        <LightText>@{userData.data.accountHandle}</LightText>
                     </div>
                 </div>
                 <div id='leftBottomRight'>
@@ -67,9 +57,9 @@ function NavBarBottom() {
                 </div>
             </div>
             <div id='leftBottomSmall' onClick={toggler}>
-                <img src={userData.profileSrc} className='rounded-image' />
+                <img src={userData.data.profileSrc} className='rounded-image' />
             </div>
-            {showTippy && <UserTippy accountHandle={userData.accountHandle} />}
+            {showTippy && <UserTippy accountHandle={userData.data.accountHandle} />}
         </div>
 
     )

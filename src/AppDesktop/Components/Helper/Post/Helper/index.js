@@ -9,6 +9,76 @@ const postMoreTippyArr = [
   ['https://cdn-icons-png.flaticon.com/512/9511/9511721.png', 'Save']
 ]
 
+const monthsArr = [
+  "Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+]
+
+export const DetailedPostStats = (
+  { repliesCount, retweetsCount, likeCount, }
+) => {
+
+  console.log(repliesCount, 'adadadad')
+
+  const [arr, setArr] = useState([]);
+  useEffect(() => {
+    const obj = [
+      ['Retweets', retweetsCount !== null ? retweetsCount : 0],
+      ['Replies', repliesCount !== null ? repliesCount : 0],
+      ['Likes', likeCount !== null ? likeCount : 0],
+    ]
+    setArr(obj);
+  }, []);
+
+  useEffect(() => {
+    const obj = [
+      ['Retweets', retweetsCount !== null ? retweetsCount : 0],
+      ['Replies', repliesCount !== null ? repliesCount : 0],
+      ['Likes', likeCount !== null ? likeCount : 0],
+    ]
+    setArr(obj);
+  }, [likeCount, retweetsCount, repliesCount]);
+
+
+  return (
+    <div className="detailed-postStats-container">
+      <div className='detailed-postStats-container-left'>
+        {arr.map((item) => {
+          return <div className='detailed-postStats-item-container'>
+            <div className='detailed-postStats-item-count'>{item[1] === 0 || item[1] ? item[1] : 0}</div>
+            <div className='detailed-postStats-item-text'>{item[0]}</div>
+          </div>
+        })}
+
+      </div>
+      <div style={{ width: '50%' }}></div>
+    </div>
+  )
+}
+export const PostStatForIndividualTweet = ({ timestamp }) => {
+  const [result, setResult] = useState('')
+
+  useEffect(() => {
+    if (timestamp) {
+      let amPm;
+      const newDate = new Date(timestamp);
+      const hours = newDate.getHours();
+      const minutes = newDate.getMinutes();
+      const seconds = newDate.getSeconds();
+      const month = newDate.getMonth();
+      const currDate = newDate.getDate();
+      const year = newDate.getFullYear();
+      if (hours <= 12) amPm = 'AM';
+      else amPm = 'PM';
+      let convertedHours = hours > 12 ? hours - 12 : hours;
+      setResult(`${convertedHours}:${minutes < 10 ? '0' + minutes : minutes} ${amPm} · ${monthsArr[month]} ${currDate}, ${year}`);
+    }
+  }, []);
+  return (
+    <div className='post-stat-individualTweet'>
+      {result}
+    </div>
+  )
+}
 export const PollViewer = ({ id, accountHandle, poll, alreadyVoted }) => {
   const [polls, setPolls] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -238,7 +308,18 @@ export const Pikaso = () => {
   );
 };
 
-export const PostMoreTippy = ({ setShowTippy, idx, bookmarkTweetFn, showToastify }) => {
+export const PostMoreTippy = (
+  { idd, showFollowToastify,
+    showInfoToastify,
+    showErrorToastify,
+    setShowTippy, idx,
+    bookmarkTweetFn,
+    accountHandle,
+    alreadyFollowToastify,
+    accountName,
+    verified,
+    typeOfVerification,
+    showToastify }) => {
   const id = `post-more-tippy${idx}`;
   return (
     <div className='post-more-tippy' id={id}>
@@ -246,10 +327,47 @@ export const PostMoreTippy = ({ setShowTippy, idx, bookmarkTweetFn, showToastify
         return <div className='post-more-tippy-item' key={idx}
           onClick={() => {
             if (item[1] === 'Save') {
-              bookmarkTweetFn();
-              setShowTippy(false);
-              showToastify();
+              const fetch = async () => {
+                try {
+                  const { data } = await axios.post(`${BACKEND_URL}/pages/bookmark/alreadyExists`, { id: idd }, { withCredentials: true });
+                  const { message } = data;
+                  if (message === "Exists") {
+                    showErrorToastify();
+                  }
+                  else {
+                    bookmarkTweetFn();
+                    showToastify();
+                  }
+                }
+                catch (err) {
+                  console.log('err', err);
+                }
+              }
+              fetch();
             }
+            else if (item[1] === "Follow") {
+              const fetch = async () => {
+                try {
+                  const alreadyFollowing = await axios.post(`${BACKEND_URL}/pages/alreadyFollows`, { accountHandle: accountHandle }, { withCredentials: true })
+                  if (alreadyFollowing.data) {
+                    alreadyFollowToastify(accountHandle);
+                  }
+                  else{
+                    const alreadyFollowing = await axios.post(`${BACKEND_URL}/pages/newFollow`, { accountHandle: accountHandle }, { withCredentials: true })
+                    showFollowToastify(accountHandle);
+                  }
+                }
+                catch (error) {
+                  throw error;
+                }
+              }
+              fetch();
+             
+            }
+            else if (item[1] === "Not interested in this tweet") {
+              showInfoToastify();
+            }
+            setShowTippy(false);
           }}
         >
           <div className='post-more-tippy-imgContainer'><img width='18px' height='18px' src={item[0]} alt='' /></div>
@@ -261,7 +379,19 @@ export const PostMoreTippy = ({ setShowTippy, idx, bookmarkTweetFn, showToastify
   )
 }
 
-export const MoreOptions = ({ idd, bookmarkTweetFn, showToastify }) => {
+export const MoreOptions = ({
+  showErrorToastify,
+  idd,
+  bookmarkTweetFn,
+  showToastify,
+  showInfoToastify,
+  showFollowToastify,
+  accountHandle,
+  alreadyFollowToastify,
+  accountName,
+  verified,
+  typeOfVerification,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showTippy, setShowTippy] = useState(false);
   const id = `postMoreOptions${idd}`
@@ -332,7 +462,19 @@ export const MoreOptions = ({ idd, bookmarkTweetFn, showToastify }) => {
         />
       </div>
     )}
-    {showTippy && <PostMoreTippy setShowTippy={setShowTippy} showToastify={showToastify} bookmarkTweetFn={bookmarkTweetFn} idx={idd} />}
+    {showTippy && <PostMoreTippy idd={idd}
+      showFollowToastify={showFollowToastify}
+      showErrorToastify={showErrorToastify}
+      showInfoToastify={showInfoToastify}
+      setShowTippy={setShowTippy}
+      showToastify={showToastify}
+      bookmarkTweetFn={bookmarkTweetFn}
+      accountHandle={accountHandle}
+      accountName={accountName}
+      verified={verified}
+      typeOfVerification={typeOfVerification}
+      alreadyFollowToastify={alreadyFollowToastify}
+      idx={idd} />}
   </div>
 
 };
@@ -490,7 +632,12 @@ export const AccountDetailsAndScreenshotAndMore = ({
   typeOfVerification,
   verified,
   bookmarkTweetFn,
-  showToastify
+  showToastify,
+  forReply,
+  showErrorToastify,
+  showFollowToastify,
+  showInfoToastify,
+  alreadyFollowToastify,
 }) => {
   return (
     <div className="accountDetailsAndScreenshotAndMoreContainer">
@@ -501,31 +648,35 @@ export const AccountDetailsAndScreenshotAndMore = ({
         <DotSeperator />
         <TimeStamp timestamp={timeStamp} />
       </div>
-      <div className="accountDetailsAndScreenshotAndMoreRightSideContainer">
+      {!forReply && <div className="accountDetailsAndScreenshotAndMoreRightSideContainer">
         <Pikaso />
-        <MoreOptions idd={id} showToastify={showToastify} bookmarkTweetFn={bookmarkTweetFn} idx={idx} />
-      </div>
+        <MoreOptions showInfoToastify={showInfoToastify}
+          showFollowToastify={showFollowToastify}
+          showErrorToastify={showErrorToastify}
+          idd={id} showToastify={showToastify}
+          bookmarkTweetFn={bookmarkTweetFn}
+          accountHandle={accountHandle}
+          alreadyFollowToastify={alreadyFollowToastify}
+          accountName={accountName}
+          verified={verified}
+          typeOfVerification={typeOfVerification}
+          idx={idx} />
+      </div>}
     </div>
   );
 };
 
-export const PostStat = ({ likedAlready, accountHandle, id, urlFilled, type, name, urlHovered, urlGrey }) => {
-  const [likedAlreadyState, setLikedAlreadyState] = useState(likedAlready ? likedAlready : false);
-  const [likesState, setLikesState] = useState(name ? name : name === null ? 0 : 0);
-  // console.log('likedAlreadyState', likedAlreadyState)
-  // console.log('likesState', likesState);
+export const PostStat = ({ prevLikeState, prevRetweetState, incrementerOrDecrementer, forIndividualTweet, setShowReplyModal, initialAlready, accountHandle, id, urlFilled, type, name, urlHovered, urlGrey }) => {
+  const [initialAlreadyState, setInitialAlreadyState] = useState(initialAlready ? initialAlready : false);
+  const [count, setCount] = useState(name ? name : name === null ? 0 : 0);
+
   useEffect(() => {
-    // const fetch = async () => {
-    //   let result = await axios.get(`${BACKEND_URL}/posts/`)
-    // }
-    // fetch();
+
   }, [])
 
   const likesToggler = () => {
-    // console.log('likedAlreadyState', likedAlreadyState)
-    // console.log('likesState', likesState);
-    if (likedAlreadyState) setLikesState(likesState => likesState - 1);
-    else setLikesState(likesState => likesState + 1);
+    if (initialAlreadyState) setCount(likesState => likesState - 1);
+    else setCount(likesState => likesState + 1);
   }
 
   const [statHovered, setStatHovered] = useState(false);
@@ -555,15 +706,62 @@ export const PostStat = ({ likedAlready, accountHandle, id, urlFilled, type, nam
         const result = await axios.post(`${BACKEND_URL}/post/stats/like/toggle`, { tweetId: id, tweetsWriter: accountHandle }, { withCredentials: true });
         const { message } = result.data;
         if (message === "Successfully unliked!") {
-          setLikesState(likesState => likesState - 1);
+          if (forIndividualTweet) {
+            incrementerOrDecrementer(prevLikeState => prevLikeState - 1);
+          }
+          else {
+            setCount(count => count - 1);
+          }
+          if (initialAlreadyState) setInitialAlreadyState(false);
+          else setInitialAlreadyState(true);
         }
         else {
-          setLikesState(likesState => likesState + 1);
+          if (forIndividualTweet) {
+            incrementerOrDecrementer(prevLikeState => prevLikeState + 1);
+          }
+          else {
+            setCount(count => count + 1);
+          }
+          if (initialAlreadyState) setInitialAlreadyState(false);
+          else setInitialAlreadyState(true);
+
         }
-        if (likedAlreadyState) setLikedAlreadyState(false);
-        else setLikedAlreadyState(true);
       }
       fetch();
+    }
+    else if (type === 'retweet') {
+      const fetch = async () => {
+        try {
+          const { data } = await axios.post(`${BACKEND_URL}/post/toggleRetweet`, { id: id, accountHandle: accountHandle }, { withCredentials: true });
+          const { message } = data;
+          if (message === "Successfully retweeted!") {
+            if (forIndividualTweet) {
+              incrementerOrDecrementer(prevRetweetState => prevRetweetState + 1);
+            }
+            else {
+              setCount(count => count + 1);
+            }
+
+          }
+          else if (message === "Successfully removed retweet!") {
+            if (forIndividualTweet) {
+              incrementerOrDecrementer(prevRetweetState => prevRetweetState - 1);
+            }
+            else {
+              setCount(count => count - 1);
+
+            }
+          }
+          if (initialAlreadyState) setInitialAlreadyState(false);
+          else setInitialAlreadyState(true);
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      fetch();
+    }
+    else if (type === 'reply') {
+      setShowReplyModal(true);
     }
   }
   // console.log(name);
@@ -571,8 +769,7 @@ export const PostStat = ({ likedAlready, accountHandle, id, urlFilled, type, nam
     <div
       className="post-stat"
       onMouseOver={viewsMouseOverHandler}
-      onMouseLeave={viewsMouseLeaveHandler}
-    >
+      onMouseLeave={viewsMouseLeaveHandler}>
       <div
         className="post-stat-img-container"
         style={{
@@ -591,57 +788,70 @@ export const PostStat = ({ likedAlready, accountHandle, id, urlFilled, type, nam
             style={{ transition: '0.2s' }}
           />
         ) : (
-          <img src={likedAlreadyState ? urlFilled : urlGrey} style={{ transition: '0.2s' }} width="18.75px" height="18.75px" alt="post-stat" />
+          <img src={initialAlreadyState ? urlFilled : urlGrey} style={{ transition: '0.2s' }} width="18.75px" height="18.75px" alt="post-stat" />
         )}
       </div>
-      <div className="post-stat-text" onClick={() => {
-        if (type === 'like') likesToggler();
-      }} style={{ color: (statHovered || likedAlreadyState) && color }}>
-        {type === 'like'
-          ? likesState
-          : name || type == 'share' ? name : 0
+      {!forIndividualTweet && <div className="post-stat-text" style={{ color: (statHovered || initialAlreadyState) && color }}>
+        {type == 'share' ?
+          null
+          : count
         }
-      </div>
+
+      </div>}
     </div>
   );
 };
 
-export const PostStats = ({ id, likedAlready, retweetedAlready, accountHandle, views, replies, retweets, likes, share }) => {
+export const PostStats = ({ prevLikeState, prevRetweetState, setLikesCountState, setRetweetsCountsState, forIndividualTweet, replyCount, setShowReplyModal, id, likedAlready, retweetedAlready, accountHandle, views, replies, retweets, likes, share }) => {
   return (
     <div className="post-stats">
-      <PostStat
+      {/* <PostStat
         type="view"
         urlHovered={"https://i.ibb.co/SNJkZ73/views-blue.png"}
         urlGrey={"https://i.ibb.co/JcZ4Fvh/views-grey.png"}
         name={views}
-      />
+        forIndividualTweet={forIndividualTweet}
+      /> */}
       <PostStat
+        setShowReplyModal={setShowReplyModal}
         type="reply"
         urlHovered={"https://i.ibb.co/Z8gC171/chat-1-1.png"}
         urlGrey={"https://i.ibb.co/9WsBcdb/chat-1.png"}
-        name={replies}
-      />
-      <PostStat
-        type="retweet"
-        urlHovered={"https://i.ibb.co/DgT2MYg/repeat-2.png"}
-        urlGrey={"https://i.ibb.co/Tg30CRt/repeat-1.png"}
-        name={retweets}
+        name={replyCount}
+        forIndividualTweet={forIndividualTweet}
       />
       <PostStat
         id={id}
         accountHandle={accountHandle}
-        likedAlready={likedAlready}
+        initialAlready={retweetedAlready}
+        type="retweet"
+        prevRetweetState={prevRetweetState}
+        urlFilled={"https://i.ibb.co/DgT2MYg/repeat-2.png"}
+        urlHovered={"https://i.ibb.co/DgT2MYg/repeat-2.png"}
+        urlGrey={"https://i.ibb.co/Tg30CRt/repeat-1.png"}
+        name={retweets}
+        forIndividualTweet={forIndividualTweet}
+        incrementerOrDecrementer={setRetweetsCountsState}
+      />
+      <PostStat
+        id={id}
+        accountHandle={accountHandle}
+        initialAlready={likedAlready}
         urlFilled={'https://i.ibb.co/L9m8FCt/heart-2.png'}
         type="like"
+        prevLikeState={prevLikeState}
         urlHovered={"https://i.ibb.co/2KkyVfp/heart-2.png"}
         urlGrey={"https://i.ibb.co/qmB8Cp0/heart-1.png"}
         name={likes}
+        forIndividualTweet={forIndividualTweet}
+        incrementerOrDecrementer={setLikesCountState}
       />
       <PostStat
         type="share"
         urlHovered={"https://i.ibb.co/64yk2H3/upload-blue.png"}
         urlGrey={"https://i.ibb.co/8X0jQKm/upload-grey.png"}
         name={share}
+        forIndividualTweet={forIndividualTweet}
       />
     </div>
   );
@@ -662,5 +872,6 @@ export default {
   AccountHandle,
   Verified,
   AccountName,
-  PostWhoLikedOrCommented
+  PostWhoLikedOrCommented,
+  PostStatForIndividualTweet
 };

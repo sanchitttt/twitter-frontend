@@ -39,13 +39,13 @@ function Bookmarks() {
       </div>
       <div id="bookmarked-posts">
         {data.map((post, idx) => {
-          if (!post.tweets) {
-            console.log('!data.tweets executed')
+          // if (!post.tweets) {
+            // console.log('!data.tweets executed')
             return (
               <Post
                 idx={idx}
-                key={post._id}
-                id={post._id}
+                key={post.id}
+                id={post.id}
                 profileSrc={post.profileSrc}
                 accountName={post.accountName}
                 accountHandle={post.accountHandle}
@@ -64,45 +64,45 @@ function Bookmarks() {
                 likes={post.likes}
                 attachments={post.attachments}
                 // relation={relation}
-                likedAlready={post.alreadyLiked}
+                likedAlready={post.likedAlready}
                 retweetedAlready={post.retweetedAlready}
               />
             );
-          }
-          else {
-            return post.tweets.map((item, idx) => {
-              console.log('yes')
-              return (
-                <Post
-                  length={post.tweets.length}
-                  idx={idx}
-                  key={item._id}
-                  id={item._id}
-                  profileSrc={post.profileSrc}
-                  accountName={post.accountName}
-                  accountHandle={post.accountHandle}
-                  verified={post.verified}
-                  timeStamp={item.createdAt}
-                  tweetText={item.tweetText}
-                  isAThread={idx === post.length - 1 ? false : true}
-                  // taggedHandles={item.taggedHandles}
-                  poll={item.poll}
-                  views={item.views}
-                  alreadyVoted={post.alreadyVoted}
-                  replies={item.replies}
-                  typeOfVerification={item.typeOfVerification}
-                  retweets={item.retweets}
-                  whoCanReply={item.whoCanReply}
-                  likes={item.likes}
-                  attachments={item.attachments}
-                  // relation={relation}
-                  likedAlready={item.alreadyLiked}
-                  retweetedAlready={item.retweetedAlready}
-                  originalTweetThread={post.tweets}
-                />
-              );
-            })
-          }
+          // }
+          // else {
+          //   return post.tweets.map((item, idx) => {
+          //     console.log('yes')
+          //     return (
+          //       <Post
+          //         length={post.tweets.length}
+          //         idx={idx}
+          //         key={item._id}
+          //         id={item._id}
+          //         profileSrc={post.profileSrc}
+          //         accountName={post.accountName}
+          //         accountHandle={post.accountHandle}
+          //         verified={post.verified}
+          //         timeStamp={item.createdAt}
+          //         tweetText={item.tweetText}
+          //         isAThread={idx === post.length - 1 ? false : true}
+          //         // taggedHandles={item.taggedHandles}
+          //         poll={item.poll}
+          //         views={item.views}
+          //         alreadyVoted={post.alreadyVoted}
+          //         replies={item.replies}
+          //         typeOfVerification={item.typeOfVerification}
+          //         retweets={item.retweets}
+          //         whoCanReply={item.whoCanReply}
+          //         likes={item.likes}
+          //         attachments={item.attachments}
+          //         // relation={relation}
+          //         likedAlready={item.alreadyLiked}
+          //         retweetedAlready={item.retweetedAlready}
+          //         originalTweetThread={post.tweets}
+          //       />
+          //     );
+          //   })
+          // }
         })}
       </div>
     </div>

@@ -1,0 +1,20 @@
+.fullScreenStoryContainer {
+    width: 600px;
+    height: 960px;
+    /* background-color: white; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.fullScreenStoryItem {
+    width: 80%;
+    height: 100%;
+
+}
+
+.fullScreenStoryItem img {
+    background-color: black;
+    object-fit: contain;
+}

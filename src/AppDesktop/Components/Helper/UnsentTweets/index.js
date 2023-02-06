@@ -17,6 +17,10 @@ const UnsentTweetButton = ({ children, isActive }) => {
 
 const UnsentTweets = ({activeOptionHandler}) => {
   const [activeOption, setActiveOption] = useState("scheduled");
+
+  // useEffect(() => {
+
+  // })
   return (
     <>
       <div
@@ -50,7 +54,7 @@ const UnsentTweets = ({activeOptionHandler}) => {
           className="row-flexbox mt-10"
           style={{ width: "100%", justifyContent: "space-between" }}
         >
-          <div style={{ width: "50%" }}>
+          {/* <div style={{ width: "50%" }}>
             <div onClick={() => setActiveOption("drafts")}>
               <UnsentTweetButton
                 activeOptionHandler={setActiveOption}
@@ -59,8 +63,8 @@ const UnsentTweets = ({activeOptionHandler}) => {
                 Drafts
               </UnsentTweetButton>
             </div>
-          </div>
-          <div style={{ width: "50%" }}>
+          </div> */}
+          <div style={{ width: "100%" }}>
             <div onClick={() => setActiveOption("scheduled")}>
               <UnsentTweetButton isActive={activeOption === "scheduled"}>
                 Scheduled

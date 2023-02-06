@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import '../HomePost/styles.css';
 import PrimaryButton from '../../../Helper/PrimaryButton/index';
 import PostIcon from '../../../Helper/PostIcon/index'
@@ -15,6 +15,7 @@ import TweetsThread from '../TweetThread';
 import { ImagePreview } from '../Helper/ImageSection';
 import axios from 'axios';
 import { BACKEND_URL } from '../../../../../config/config';
+import AccountDetailsContext from '../../../../Contexts/AccountDetailsContext';
 
 
 
@@ -49,7 +50,7 @@ const monthsArr = [
     "December"
 ];
 
-function HomePost({ forTimeline }) {
+function HomePost({ replyObj, idd, prevReplyCountState, setReplyCountState, accountHandle, forTimeline, setShowReplyModal, forReply, placeholder }) {
     const [text, setText] = useState("");
     const [totalCount, setTotalCount] = useState(0);
     const [hasChanged, setHasChanged] = useState(false);
@@ -68,9 +69,14 @@ function HomePost({ forTimeline }) {
     const [pollDate, setPollDate] = useState({ changed: false, hours: null, minutes: null, days: null });
     const [pollOptions, setPollOptions] = useState({});
 
+
+    const AccountDetails = useContext(AccountDetailsContext);
+
     const handleFiles = (files) => {
         setImageList(files.base64);
     };
+
+
 
     const myRef = useRef(null);
 
@@ -145,9 +151,79 @@ function HomePost({ forTimeline }) {
                 setProgress(0);
             }
         }
-        if (tweetEnabled) {
-            fetch();
+        const fetch2 = async () => {
+            try {
+                let now;
+                let scheduledDate;
+                let pollOptionsResult = [];
+                if (isAScheduledTweet.bool) {
+                    const { amPm, date, hour, minute, month, year } = isAScheduledTweet;
+                    let monthIndex;
+                    for (let i = 0; i < monthsArr.length; i++) if (monthsArr[i] === month) {
+                        monthIndex = i;
+                        break;
+                    }
+                    scheduledDate = new Date(year, monthIndex, date, amPm === "AM" ? hour : hour + 12, minute);
+                }
 
+                if (pollDate.changed) {
+                    now = new Date();
+                    if (pollDate.hours) now.setHours(now.getHours() + pollDate.hours);
+                    if (pollDate.days) now.setDate(now.getDate() + pollDate.days);
+                    if (pollDate.minutes) now.setMinutes(now.getMinutes() + pollDate.minutes);
+                    let arr = Object.values(pollOptions);
+                    let arr2 = Object.values(arr[0]);
+                    for (let i = 0; i < arr[1] - 1; i++) {
+                        pollOptionsResult.push([arr2[i], 0])
+                    }
+                }
+
+                let obj = {
+                    tweetText: text,
+                    poll: { expiresAt: now, options: pollOptionsResult },
+                    scheduledDate: scheduledDate ? scheduledDate : null,
+                    audience: audience,
+                    whoCanReply: whoCanReplyText,
+                    attachments: imageList,
+                    createdAt: new Date(),
+                    ...replyObj
+                }
+
+                const result = await axios.post(`${BACKEND_URL}/post/replies/addReply`,
+                    { payload: obj, accountHandle: accountHandle, id: idd },
+                    { withCredentials: true });
+                console.log('result', result);
+                setProgress(0);
+                setText('');
+                setIsAScheduledTweet({ changed: false, hours: null, minutes: null, days: null })
+                setImageList([]);
+                setWhoCanReplyText('Everyone');
+                setAudience('everyone');
+                setActiveOptionClicked(null);
+                if (result) {
+                    setProgress(0);
+                    setShowReplyModal(false);
+                    setText('');
+                    setIsAScheduledTweet({ changed: false, hours: null, minutes: null, days: null })
+                    setImageList([]);
+                    setWhoCanReplyText('Everyone');
+                    setAudience('everyone');
+                    setActiveOptionClicked(null);
+                }
+            }
+            catch (error) {
+            }
+        }
+        if (tweetEnabled) {
+            if (forReply) {
+                fetch2();
+                console.log(setReplyCountState, "000000000");
+                console.log(prevReplyCountState, "111111111111");
+                setReplyCountState(prevReplyCountState => prevReplyCountState + 1)
+            }
+            else {
+                fetch();
+            }
             return () => {
                 clearTimeout(id);
             }
@@ -252,10 +328,12 @@ function HomePost({ forTimeline }) {
                     <div id='home-post-left-top'>
                         <img
                             alt='someImg'
-                            src='https://i.ibb.co/p4R5q3P/1655230 024525.jpg'
+                            src={AccountDetails && AccountDetails.profileSrc ? AccountDetails.profileSrc : 'https://i.ibb.co/p4R5q3P/1655230 024525.jpg'}
                             className='rounded-image'
                             width='48px'
-                            height='48px' />
+                            height='48px'
+                            style={{ zIndex: forReply && '2000' }}
+                        />
                     </div>
                     <div>
 
@@ -277,7 +355,7 @@ function HomePost({ forTimeline }) {
                         </div>
                     }
 
-                    {hasClicked && <HomeCheckbox audience={audience} audienceHandler={setAudience} />}
+                    {hasClicked && !forReply && <HomeCheckbox audience={audience} audienceHandler={setAudience} />}
                     <div style={{ marginTop: '10px', marginBottom: '10px' }}>
                         <TextField
                             ref={myRef}
@@ -288,7 +366,7 @@ function HomePost({ forTimeline }) {
                             onChange={textHandler}
                             onFocus={focusHandler}
                             multiline={true}
-                            placeholder={activeOptionClicked === 'poll' ? "Ask a question" : "What's happening?"}
+                            placeholder={activeOptionClicked === 'poll' ? "Ask a question" : placeholder ? placeholder : forReply ? "Tweet your reply" : "What's happening?"}
                             sx={{
 
                                 border: 'none',
@@ -318,11 +396,12 @@ function HomePost({ forTimeline }) {
                             showTippy={setShowWhoCanReplyTippy}
                         />
                     )}
-                    {hasClicked &&
+                    {hasClicked && !forReply &&
                         <div onClick={() => {
                             if (audience !== 'circle') setShowWhoCanReplyTippy(true)
                         }}>
                             <HomePostTextHelper
+
                                 disabled={audience === 'circle'}
                                 url={audience === 'circle' ? 'https://i.ibb.co/n7Gsfw7/lock-blue.png' : 'https://i.ibb.co/NnThJNG/earth-blue.png'}>
                                 {audience === 'circle' ? 'Only your Twitter Circle can reply' : whoCanReplyText}
@@ -342,7 +421,7 @@ function HomePost({ forTimeline }) {
                             {text.length >= 250 && <span style={{ color: text.length > 240 ? text.length >= 280 ? 'red' : 'orange' : 'black', display: text.length > 250 ? 'inline' : 'none' }} id='word-limit'>{280 - text.length}</span>}
                         </div>
                         <div id='home-post-right-bottom-right'>
-                            {text.length > 0 &&
+                            {text.length > 0 && !forReply &&
                                 <div
                                     className='addMoreTweetContainer'
                                     onClick={() => setShowTweetThread(true)}
@@ -357,7 +436,7 @@ function HomePost({ forTimeline }) {
                                 }
                             }>
                                 <PrimaryButton isNotActive={text === ''} bgColor='1D98F0'>
-                                    Tweet
+                                    {forReply ? "Reply" : "Tweet"}
                                 </PrimaryButton>
                             </div>
                         </div>

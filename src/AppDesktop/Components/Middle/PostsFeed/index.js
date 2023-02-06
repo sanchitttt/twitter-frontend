@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Post from '../../Helper/Post';
 import './styles.css';
 
 const Posts = ({ forTimeline, createdAt, accountNameGiven, accountHandleGiven, profileSrcGiven, postsArr, relation, poll }) => {
-  console.log(postsArr);
+
   if (forTimeline) {
     return (
       <>
@@ -38,6 +38,7 @@ const Posts = ({ forTimeline, createdAt, accountNameGiven, accountHandleGiven, p
                       relation={relation}
                       likedAlready={post.likedAlready}
                       retweetedAlready={post.retweetedAlready}
+                      replyCount={post.replyCount}
                     />
                   );
                 }
@@ -69,6 +70,7 @@ const Posts = ({ forTimeline, createdAt, accountNameGiven, accountHandleGiven, p
                         relation={relation}
                         likedAlready={item.likedAlready}
                         retweetedAlready={item.retweetedAlready}
+                        replyCount={item.replyCount}
                       />
                     );
                   })
@@ -102,6 +104,7 @@ const Posts = ({ forTimeline, createdAt, accountNameGiven, accountHandleGiven, p
                     relation={relation}
                     likedAlready={post.alreadyLiked}
                     retweetedAlready={post.retweetedAlready}
+                    replyCount={post.replyCount}
                   />
                 );
               }
@@ -134,6 +137,7 @@ const Posts = ({ forTimeline, createdAt, accountNameGiven, accountHandleGiven, p
                       likedAlready={item.alreadyLiked}
                       retweetedAlready={item.retweetedAlready}
                       originalTweetThread={post.tweets}
+                      replyCount={item.replyCount}
                     />
                   );
                 })

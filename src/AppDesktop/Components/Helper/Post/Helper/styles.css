@@ -294,20 +294,21 @@
     z-index: 10000;
 }
 
-.post-more-tippy-item:first-child{
+.post-more-tippy-item:first-child {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
+
 .post-more-tippy-item {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding:10px 0px;
+    padding: 10px 0px;
     transition: 0.2s;
 }
 
-.post-more-tippy-item:hover{
-    background-color: rgba(15,20,25,0.1);
+.post-more-tippy-item:hover {
+    background-color: rgba(15, 20, 25, 0.1);
 }
 
 .post-more-tippy-imgContainer {
@@ -327,21 +328,68 @@
 
 }
 
-.individualPollsItem-optionTextBlue{
+.individualPollsItem-optionTextBlue {
     font-size: 15px;
     font-family: 'Poppins';
-    color:  rgb(29, 155, 240);
+    color: rgb(29, 155, 240);
 }
 
-.individualPollsItemBlue{
+.individualPollsItemBlue {
     border-radius: 999px;
     transition: 0.15s;
 }
-.individualPollsItemBlue:hover{
+
+.individualPollsItemBlue:hover {
     /* b */
-    background: rgba(29, 155, 240,0.1);
+    background: rgba(29, 155, 240, 0.1);
 }
 
+.post-stat-individualTweet {
+    margin-top: 10px;
+    color: #536471;
+    font-size: 15px;
+    font-family: 'Poppins';
+}
+
+.detailed-postStats-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #eff3f4;
+}
+
+.detailed-postStats-container-left {
+    margin-left: 10px;
+    width: 50%;
+}
+
+.detailed-postStats-item-container {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detailed-postStats-container-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detailed-postStats-item-count {
+    font-size: 14px;
+    color: #0f1419;
+    font-weight: bold;
+    margin-right: 5px;
+    font-family: 'Poppins';
+}
+
+.detailed-postStats-item-text {
+    font-family: 'Poppins';
+    color: #536471;
+    font-size: 14px;
+}
 
 @media screen and (max-width:600px) {
     .post-stats {

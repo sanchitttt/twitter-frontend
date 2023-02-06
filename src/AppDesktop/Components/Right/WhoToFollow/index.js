@@ -24,6 +24,7 @@ import './styles.css';
 // ];
 
 const WhoToFollow = ({ whoToFollowArr }) => {
+  console.log('who to follow arr' ,whoToFollowArr)
   return (
     <div className="rightSide-whoToFollow-container">
       <div className="rightSide-whoToFollow-container-firstRow">

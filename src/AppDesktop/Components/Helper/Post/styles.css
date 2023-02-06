@@ -9,6 +9,7 @@
     padding: 10px 0px;
     width: 100% !important;
     border-top: 1px solid #eff3f4;
+    transition: 0.2s;
 }
 
 .postCard-leftSide-container {
@@ -23,6 +24,10 @@
 .postCard-rightSide-container {
     display: flex;
     flex-direction: column;
+}
+
+.post-card-container:hover{
+    background-color: #f4f4f4;
 }
 
 @media screen and (max-width:412px){
